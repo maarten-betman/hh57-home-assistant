@@ -1,0 +1,29 @@
+[
+ {
+  "machine": "Washing machine",
+  "kwh": 188.7,
+  "cost_eur": 50.67,
+  "per_month_eur": 5.96,
+  "per_year_eur": 71.42,
+  "eur_per_kwh": 0.269,
+  "days_measured": 259
+ },
+ {
+  "machine": "Dryer",
+  "kwh": 81.4,
+  "cost_eur": 22.06,
+  "per_month_eur": 2.59,
+  "per_year_eur": 31.1,
+  "eur_per_kwh": 0.271,
+  "days_measured": 259
+ },
+ {
+  "machine": "Coffee machine",
+  "kwh": 248.52,
+  "cost_eur": 63.0,
+  "per_month_eur": 6.83,
+  "per_year_eur": 81.89,
+  "eur_per_kwh": 0.253,
+  "days_measured": 281
+ }
+]

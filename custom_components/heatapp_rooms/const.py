@@ -1,0 +1,9 @@
+DOMAIN = "heatapp_rooms"
+CONF_GW_HOST = "gateway_host"
+CONF_GW_USER = "gateway_user"
+CONF_GW_PASS = "gateway_password"
+CONF_CB_HOST = "controlbox_host"
+CONF_CB_USER = "controlbox_user"
+CONF_CB_PASS = "controlbox_password"
+SCAN_MINUTES = 5
+STALE_MINUTES = 60  # sensor not heard from for this long -> unavailable

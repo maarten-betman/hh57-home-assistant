@@ -1,0 +1,120 @@
+diff --git a/components/nrf905/__init__.py b/components/nrf905/__init__.py
+index 5ce0c38..d4fb2f4 100644
+--- a/components/nrf905/__init__.py
++++ b/components/nrf905/__init__.py
+@@ -1,7 +1,7 @@
+ import esphome.codegen as cg
+ import esphome.config_validation as cv
+ from esphome import pins
+-from esphome.components import fan, spi
++from esphome.components import spi
+ from esphome.const import CONF_ID
+ 
+ CONF_AM_PIN = "am_pin"
+@@ -14,7 +14,7 @@ CONF_TXEN_PIN = "txen_pin"
+ DEPENDENCIES = ["spi"]
+ 
+ nrf905_ns = cg.esphome_ns.namespace("nrf905")
+-nRF905Component = nrf905_ns.class_("nRF905", fan.FanState)
++nRF905Component = nrf905_ns.class_("nRF905", cg.Component, spi.SPIDevice)
+ 
+ CONFIG_SCHEMA = (
+     cv.Schema(
+diff --git a/components/nrf905/nRF905.h b/components/nrf905/nRF905.h
+index 8df17fa..a2f1a75 100644
+--- a/components/nrf905/nRF905.h
++++ b/components/nrf905/nRF905.h
+@@ -94,8 +94,8 @@ class nRF905 : public Component,
+ 
+   void setup() override;
+ 
+-  // float get_setup_priority() const override { return setup_priority::HARDWARE; }
+-  float get_setup_priority() const override { return setup_priority::AFTER_CONNECTION; }
++  // Must run before ZehnderRF::setup() (DATA), which configures the radio over SPI.
++  float get_setup_priority() const override { return setup_priority::HARDWARE; }
+ 
+   void dump_config() override;
+   void loop() override;
+diff --git a/components/zehnder/fan.py b/components/zehnder/fan.py
+index e1b1bd1..cdcdd79 100644
+--- a/components/zehnder/fan.py
++++ b/components/zehnder/fan.py
+@@ -1,7 +1,7 @@
+ import esphome.codegen as cg
+ import esphome.config_validation as cv
+ from esphome.components import fan
+-from esphome.const import CONF_ID, CONF_UPDATE_INTERVAL
++from esphome.const import CONF_UPDATE_INTERVAL
+ 
+ from esphome.components.nrf905 import nRF905Component
+ 
+@@ -9,23 +9,25 @@ from esphome.components.nrf905 import nRF905Component
+ DEPENDENCIES = ["nrf905"]
+ 
+ zehnder_ns = cg.esphome_ns.namespace("zehnder")
+-ZehnderRF = zehnder_ns.class_("ZehnderRF", fan.FanState)
++ZehnderRF = zehnder_ns.class_("ZehnderRF", cg.Component, fan.Fan)
+ 
+ CONF_NRF905 = "nrf905"
+ 
+-CONFIG_SCHEMA = fan.FAN_SCHEMA.extend(
+-    {
+-        cv.GenerateID(): cv.declare_id(ZehnderRF),
+-        cv.Required(CONF_NRF905): cv.use_id(nRF905Component),
+-        cv.Optional(CONF_UPDATE_INTERVAL, default="30s"): cv.update_interval,
+-    }
+-).extend(cv.COMPONENT_SCHEMA)
++CONFIG_SCHEMA = (
++    fan.fan_schema(ZehnderRF)
++    .extend(
++        {
++            cv.Required(CONF_NRF905): cv.use_id(nRF905Component),
++            cv.Optional(CONF_UPDATE_INTERVAL, default="30s"): cv.update_interval,
++        }
++    )
++    .extend(cv.COMPONENT_SCHEMA)
++)
+ 
+ 
+ async def to_code(config):
+-    var = cg.new_Pvariable(config[CONF_ID])
++    var = await fan.new_fan(config)
+     await cg.register_component(var, config)
+-    await fan.register_fan(var, config)
+ 
+     nrf905 = await cg.get_variable(config[CONF_NRF905])
+     cg.add(var.set_rf(nrf905))
+diff --git a/components/zehnder/zehnder.cpp b/components/zehnder/zehnder.cpp
+index b5092ae..682816f 100644
+--- a/components/zehnder/zehnder.cpp
++++ b/components/zehnder/zehnder.cpp
+@@ -213,6 +213,7 @@ void ZehnderRF::loop(void) {
+         // When done, return to idle
+         this->state_ = StateIdle;
+       }
++      break;
+ 
+     default:
+       break;
+@@ -387,8 +388,6 @@ void ZehnderRF::rfHandleReceived(const uint8_t *const pData, const uint8_t dataL
+                      pResponse->payload.fanSettings.timer);
+             this->rfComplete();
+ 
+-            this->rfComplete();
+-
+             (void) memset(this->_txFrame, 0, FAN_FRAMESIZE);  // Clear frame data
+ 
+             pTxFrame->rx_type = this->config_.fan_main_unit_type;  // Set type to main unit
+diff --git a/components/zehnder/zehnder.h b/components/zehnder/zehnder.h
+index 534ae46..96f0e83 100644
+--- a/components/zehnder/zehnder.h
++++ b/components/zehnder/zehnder.h
+@@ -4,7 +4,7 @@
+ #include "esphome/core/component.h"
+ #include "esphome/core/hal.h"
+ #include "esphome/components/spi/spi.h"
+-#include "esphome/components/fan/fan_state.h"
++#include "esphome/components/fan/fan.h"
+ #include "esphome/components/nrf905/nRF905.h"
+ 
+ namespace esphome {

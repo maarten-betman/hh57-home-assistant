@@ -1,0 +1,23 @@
+{
+ "id": "slaapkamer_rodret",
+ "alias": "Slaapkamer: RODRET afstandsbediening",
+ "description": "IKEA RODRET bedient de kastverlichting (light.slaapkamer). Boven = aan/feller, onder = uit/dimmen.",
+ "mode": "queued",
+ "max": 10,
+ "triggers": [
+  {"trigger": "event", "event_type": "zha_event", "event_data": {"device_ieee": "08:dd:eb:ff:fe:e3:95:ae"}}
+ ],
+ "conditions": [],
+ "actions": [
+  {"choose": [
+    {"conditions": "{{ trigger.event.data.command == 'on' }}",
+     "sequence": [{"action": "light.turn_on", "target": {"entity_id": "light.slaapkamer"}}]},
+    {"conditions": "{{ trigger.event.data.command == 'off' }}",
+     "sequence": [{"action": "light.turn_off", "target": {"entity_id": "light.slaapkamer"}}]},
+    {"conditions": "{{ trigger.event.data.command in ['move_with_on_off','move'] and (trigger.event.data.args[0]|int == 0) }}",
+     "sequence": [{"action": "light.turn_on", "target": {"entity_id": "light.slaapkamer"}, "data": {"brightness_step_pct": 25}}]},
+    {"conditions": "{{ trigger.event.data.command in ['move_with_on_off','move'] and (trigger.event.data.args[0]|int == 1) }}",
+     "sequence": [{"action": "light.turn_on", "target": {"entity_id": "light.slaapkamer"}, "data": {"brightness_step_pct": -25}}]}
+  ]}
+ ]
+}

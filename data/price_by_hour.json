@@ -1,0 +1,98 @@
+[
+ {
+  "hour": 0,
+  "avg_eur_per_kwh": 0.2814
+ },
+ {
+  "hour": 1,
+  "avg_eur_per_kwh": 0.2736
+ },
+ {
+  "hour": 2,
+  "avg_eur_per_kwh": 0.2683
+ },
+ {
+  "hour": 3,
+  "avg_eur_per_kwh": 0.2651
+ },
+ {
+  "hour": 4,
+  "avg_eur_per_kwh": 0.2652
+ },
+ {
+  "hour": 5,
+  "avg_eur_per_kwh": 0.271
+ },
+ {
+  "hour": 6,
+  "avg_eur_per_kwh": 0.2871
+ },
+ {
+  "hour": 7,
+  "avg_eur_per_kwh": 0.297
+ },
+ {
+  "hour": 8,
+  "avg_eur_per_kwh": 0.288
+ },
+ {
+  "hour": 9,
+  "avg_eur_per_kwh": 0.2605
+ },
+ {
+  "hour": 10,
+  "avg_eur_per_kwh": 0.231
+ },
+ {
+  "hour": 11,
+  "avg_eur_per_kwh": 0.2066
+ },
+ {
+  "hour": 12,
+  "avg_eur_per_kwh": 0.1897
+ },
+ {
+  "hour": 13,
+  "avg_eur_per_kwh": 0.1798
+ },
+ {
+  "hour": 14,
+  "avg_eur_per_kwh": 0.1828
+ },
+ {
+  "hour": 15,
+  "avg_eur_per_kwh": 0.1991
+ },
+ {
+  "hour": 16,
+  "avg_eur_per_kwh": 0.2261
+ },
+ {
+  "hour": 17,
+  "avg_eur_per_kwh": 0.2652
+ },
+ {
+  "hour": 18,
+  "avg_eur_per_kwh": 0.3032
+ },
+ {
+  "hour": 19,
+  "avg_eur_per_kwh": 0.3325
+ },
+ {
+  "hour": 20,
+  "avg_eur_per_kwh": 0.3402
+ },
+ {
+  "hour": 21,
+  "avg_eur_per_kwh": 0.3266
+ },
+ {
+  "hour": 22,
+  "avg_eur_per_kwh": 0.3092
+ },
+ {
+  "hour": 23,
+  "avg_eur_per_kwh": 0.29
+ }
+]

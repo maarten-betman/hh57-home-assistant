@@ -1,0 +1,32 @@
+[
+ {
+  "minutes": 30,
+  "kwh_per_year": 256,
+  "saving_per_year_eur": 77,
+  "chosen": false
+ },
+ {
+  "minutes": 45,
+  "kwh_per_year": 227,
+  "saving_per_year_eur": 68,
+  "chosen": false
+ },
+ {
+  "minutes": 60,
+  "kwh_per_year": 217,
+  "saving_per_year_eur": 65,
+  "chosen": true
+ },
+ {
+  "minutes": 90,
+  "kwh_per_year": 178,
+  "saving_per_year_eur": 54,
+  "chosen": false
+ },
+ {
+  "minutes": 120,
+  "kwh_per_year": 149,
+  "saving_per_year_eur": 45,
+  "chosen": false
+ }
+]

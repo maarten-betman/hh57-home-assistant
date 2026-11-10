@@ -1,0 +1,282 @@
+[
+ {
+  "month": "2026-01",
+  "machine": "Washing machine",
+  "kwh": 11.6,
+  "cost_eur": 3.49,
+  "partial": false
+ },
+ {
+  "month": "2026-01",
+  "machine": "Dryer",
+  "kwh": 3.8,
+  "cost_eur": 1.09,
+  "partial": false
+ },
+ {
+  "month": "2026-01",
+  "machine": "Coffee machine",
+  "kwh": 33.6,
+  "cost_eur": 8.75,
+  "partial": false
+ },
+ {
+  "month": "2026-01",
+  "machine": "Whole house",
+  "kwh": 1077.98,
+  "cost_eur": 288.4,
+  "partial": false
+ },
+ {
+  "month": "2026-02",
+  "machine": "Washing machine",
+  "kwh": 27.2,
+  "cost_eur": 6.79,
+  "partial": false
+ },
+ {
+  "month": "2026-02",
+  "machine": "Dryer",
+  "kwh": 11.4,
+  "cost_eur": 2.88,
+  "partial": false
+ },
+ {
+  "month": "2026-02",
+  "machine": "Coffee machine",
+  "kwh": 30.25,
+  "cost_eur": 7.34,
+  "partial": false
+ },
+ {
+  "month": "2026-02",
+  "machine": "Whole house",
+  "kwh": 684.45,
+  "cost_eur": 171.66,
+  "partial": false
+ },
+ {
+  "month": "2026-03",
+  "machine": "Washing machine",
+  "kwh": 23.7,
+  "cost_eur": 5.23,
+  "partial": false
+ },
+ {
+  "month": "2026-03",
+  "machine": "Dryer",
+  "kwh": 11.2,
+  "cost_eur": 2.73,
+  "partial": false
+ },
+ {
+  "month": "2026-03",
+  "machine": "Coffee machine",
+  "kwh": 29.65,
+  "cost_eur": 7.12,
+  "partial": false
+ },
+ {
+  "month": "2026-03",
+  "machine": "Whole house",
+  "kwh": 548.62,
+  "cost_eur": 146.14,
+  "partial": false
+ },
+ {
+  "month": "2026-04",
+  "machine": "Washing machine",
+  "kwh": 21.1,
+  "cost_eur": 4.86,
+  "partial": false
+ },
+ {
+  "month": "2026-04",
+  "machine": "Dryer",
+  "kwh": 10.3,
+  "cost_eur": 2.3,
+  "partial": false
+ },
+ {
+  "month": "2026-04",
+  "machine": "Coffee machine",
+  "kwh": 27.25,
+  "cost_eur": 6.32,
+  "partial": false
+ },
+ {
+  "month": "2026-04",
+  "machine": "Whole house",
+  "kwh": 421.7,
+  "cost_eur": 108.97,
+  "partial": false
+ },
+ {
+  "month": "2026-05",
+  "machine": "Washing machine",
+  "kwh": 19.9,
+  "cost_eur": 4.93,
+  "partial": false
+ },
+ {
+  "month": "2026-05",
+  "machine": "Dryer",
+  "kwh": 8.3,
+  "cost_eur": 2.02,
+  "partial": false
+ },
+ {
+  "month": "2026-05",
+  "machine": "Coffee machine",
+  "kwh": 33.07,
+  "cost_eur": 7.49,
+  "partial": false
+ },
+ {
+  "month": "2026-05",
+  "machine": "Whole house",
+  "kwh": 431.69,
+  "cost_eur": 114.86,
+  "partial": false
+ },
+ {
+  "month": "2026-06",
+  "machine": "Washing machine",
+  "kwh": 15.9,
+  "cost_eur": 3.57,
+  "partial": false
+ },
+ {
+  "month": "2026-06",
+  "machine": "Dryer",
+  "kwh": 7.3,
+  "cost_eur": 1.91,
+  "partial": false
+ },
+ {
+  "month": "2026-06",
+  "machine": "Coffee machine",
+  "kwh": 25.76,
+  "cost_eur": 6.27,
+  "partial": false
+ },
+ {
+  "month": "2026-06",
+  "machine": "Whole house",
+  "kwh": 330.07,
+  "cost_eur": 95.92,
+  "partial": false
+ },
+ {
+  "month": "2026-07",
+  "machine": "Washing machine",
+  "kwh": 11.2,
+  "cost_eur": 2.87,
+  "partial": false
+ },
+ {
+  "month": "2026-07",
+  "machine": "Dryer",
+  "kwh": 5.0,
+  "cost_eur": 1.3,
+  "partial": false
+ },
+ {
+  "month": "2026-07",
+  "machine": "Coffee machine",
+  "kwh": 13.04,
+  "cost_eur": 3.15,
+  "partial": false
+ },
+ {
+  "month": "2026-07",
+  "machine": "Whole house",
+  "kwh": 229.34,
+  "cost_eur": 63.46,
+  "partial": false
+ },
+ {
+  "month": "2026-08",
+  "machine": "Washing machine",
+  "kwh": 28.1,
+  "cost_eur": 7.37,
+  "partial": false
+ },
+ {
+  "month": "2026-08",
+  "machine": "Dryer",
+  "kwh": 12.1,
+  "cost_eur": 3.16,
+  "partial": false
+ },
+ {
+  "month": "2026-08",
+  "machine": "Coffee machine",
+  "kwh": 23.69,
+  "cost_eur": 6.24,
+  "partial": false
+ },
+ {
+  "month": "2026-08",
+  "machine": "Whole house",
+  "kwh": 360.33,
+  "cost_eur": 109.36,
+  "partial": false
+ },
+ {
+  "month": "2026-09",
+  "machine": "Washing machine",
+  "kwh": 21.7,
+  "cost_eur": 8.81,
+  "partial": false
+ },
+ {
+  "month": "2026-09",
+  "machine": "Dryer",
+  "kwh": 9.0,
+  "cost_eur": 3.55,
+  "partial": false
+ },
+ {
+  "month": "2026-09",
+  "machine": "Coffee machine",
+  "kwh": 24.91,
+  "cost_eur": 7.77,
+  "partial": false
+ },
+ {
+  "month": "2026-09",
+  "machine": "Whole house",
+  "kwh": 419.57,
+  "cost_eur": 145.01,
+  "partial": false
+ },
+ {
+  "month": "2026-10",
+  "machine": "Washing machine",
+  "kwh": 8.3,
+  "cost_eur": 2.74,
+  "partial": true
+ },
+ {
+  "month": "2026-10",
+  "machine": "Dryer",
+  "kwh": 3.0,
+  "cost_eur": 1.12,
+  "partial": true
+ },
+ {
+  "month": "2026-10",
+  "machine": "Coffee machine",
+  "kwh": 7.33,
+  "cost_eur": 2.56,
+  "partial": true
+ },
+ {
+  "month": "2026-10",
+  "machine": "Whole house",
+  "kwh": 125.38,
+  "cost_eur": 48.37,
+  "partial": true
+ }
+]

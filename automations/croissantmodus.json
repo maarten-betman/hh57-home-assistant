@@ -1,0 +1,58 @@
+{
+ "alias": "Croissantmodus",
+ "icon": "mdi:croissant",
+ "mode": "single",
+ "description": "Oven aan: hetelucht 200 \u00b0C, snel voorverwarmen, 70 minuten.",
+ "sequence": [
+  {
+   "if": [
+    {
+     "condition": "state",
+     "entity_id": "binary_sensor.oven_remote_start",
+     "state": "off"
+    }
+   ],
+   "then": [
+    {
+     "action": "notify.mobile_app_iphone_van_maarten",
+     "data": {
+      "title": "Croissantmodus niet gestart",
+      "message": "Op afstand starten staat uit op de oven. Zet het aan op de oven en probeer opnieuw."
+     }
+    },
+    {
+     "action": "notify.mobile_app_iphone_14_tessa",
+     "data": {
+      "title": "Croissantmodus niet gestart",
+      "message": "Op afstand starten staat uit op de oven. Zet het aan op de oven en probeer opnieuw."
+     }
+    },
+    {
+     "stop": "Op afstand starten staat uit"
+    }
+   ]
+  },
+  {
+   "action": "switch.turn_on",
+   "target": {
+    "entity_id": "switch.oven_power"
+   }
+  },
+  {
+   "delay": {
+    "seconds": 3
+   }
+  },
+  {
+   "action": "home_connect.set_program_and_options",
+   "data": {
+    "device_id": "6be7e29e78ebf767b22f215780557f4d",
+    "affects_to": "active_program",
+    "program": "cooking_oven_program_heating_mode_hot_air",
+    "cooking_oven_option_setpoint_temperature": 200,
+    "b_s_h_common_option_duration": 4200,
+    "cooking_oven_option_fast_pre_heat": true
+   }
+  }
+ ]
+}

@@ -1,0 +1,228 @@
+{
+ "id": "koffie_auto_off",
+ "alias": "Koffie: automatisch uit na 60 minuten",
+ "mode": "restart",
+ "description": "Zet de koffiemachine uit na 60 minuten zonder gebruik. Lang hoog verbruik (zetten/opschuimen) start de klok opnieuw. Waarschuwing na 55 min met knop 'Nog een uur aan'.",
+ "triggers": [
+  {
+   "trigger": "state",
+   "entity_id": "switch.koffie",
+   "to": "on",
+   "id": "aan"
+  },
+  {
+   "trigger": "state",
+   "entity_id": "switch.koffie",
+   "to": "off",
+   "id": "uit"
+  },
+  {
+   "trigger": "numeric_state",
+   "entity_id": "sensor.shellyplusplugs_fcb4670d5404_power",
+   "above": 900,
+   "for": {
+    "seconds": 40
+   },
+   "id": "gebruik"
+  },
+  {
+   "trigger": "event",
+   "event_type": "mobile_app_notification_action",
+   "event_data": {
+    "action": "KOFFIE_NOG_UUR"
+   },
+   "id": "nog_uur"
+  },
+  {
+   "trigger": "event",
+   "event_type": "mobile_app_notification_action",
+   "event_data": {
+    "action": "KOFFIE_WEER_AAN"
+   },
+   "id": "weer_aan"
+  },
+  {
+   "trigger": "event",
+   "event_type": "timer.finished",
+   "event_data": {
+    "entity_id": "timer.koffie_auto_uit"
+   },
+   "id": "waarschuwing"
+  }
+ ],
+ "conditions": [],
+ "actions": [
+  {
+   "choose": [
+    {
+     "conditions": [
+      {
+       "condition": "trigger",
+       "id": [
+        "aan",
+        "gebruik",
+        "nog_uur"
+       ]
+      },
+      {
+       "condition": "state",
+       "entity_id": "switch.koffie",
+       "state": "on"
+      }
+     ],
+     "sequence": [
+      {
+       "action": "timer.start",
+       "target": {
+        "entity_id": "timer.koffie_auto_uit"
+       },
+       "data": {
+        "duration": "00:55:00"
+       }
+      },
+      {
+       "action": "notify.mobile_app_iphone_van_maarten",
+       "data": {
+        "message": "clear_notification",
+        "data": {
+         "tag": "koffie"
+        }
+       }
+      },
+      {
+       "action": "notify.mobile_app_iphone_14_tessa",
+       "data": {
+        "message": "clear_notification",
+        "data": {
+         "tag": "koffie"
+        }
+       }
+      }
+     ]
+    },
+    {
+     "conditions": [
+      {
+       "condition": "trigger",
+       "id": "uit"
+      }
+     ],
+     "sequence": [
+      {
+       "action": "timer.cancel",
+       "target": {
+        "entity_id": "timer.koffie_auto_uit"
+       }
+      }
+     ]
+    },
+    {
+     "conditions": [
+      {
+       "condition": "trigger",
+       "id": "weer_aan"
+      }
+     ],
+     "sequence": [
+      {
+       "action": "switch.turn_on",
+       "target": {
+        "entity_id": "switch.koffie"
+       }
+      }
+     ]
+    },
+    {
+     "conditions": [
+      {
+       "condition": "trigger",
+       "id": "waarschuwing"
+      },
+      {
+       "condition": "state",
+       "entity_id": "switch.koffie",
+       "state": "on"
+      }
+     ],
+     "sequence": [
+      {
+       "action": "notify.mobile_app_iphone_van_maarten",
+       "data": {
+        "title": "Koffiemachine gaat over 5 minuten uit",
+        "message": "Nog koffie nodig? Houd hem nog een uur aan.",
+        "data": {
+         "tag": "koffie",
+         "actions": [
+          {
+           "action": "KOFFIE_NOG_UUR",
+           "title": "Nog een uur aan"
+          }
+         ]
+        }
+       }
+      },
+      {
+       "action": "notify.mobile_app_iphone_14_tessa",
+       "data": {
+        "title": "Koffiemachine gaat over 5 minuten uit",
+        "message": "Nog koffie nodig? Houd hem nog een uur aan.",
+        "data": {
+         "tag": "koffie",
+         "actions": [
+          {
+           "action": "KOFFIE_NOG_UUR",
+           "title": "Nog een uur aan"
+          }
+         ]
+        }
+       }
+      },
+      {
+       "delay": {
+        "minutes": 5
+       }
+      },
+      {
+       "action": "switch.turn_off",
+       "target": {
+        "entity_id": "switch.koffie"
+       }
+      },
+      {
+       "action": "notify.mobile_app_iphone_van_maarten",
+       "data": {
+        "title": "Koffiemachine uit",
+        "message": "Een uur niet gebruikt en automatisch uitgezet.",
+        "data": {
+         "tag": "koffie",
+         "actions": [
+          {
+           "action": "KOFFIE_WEER_AAN",
+           "title": "Weer aanzetten"
+          }
+         ]
+        }
+       }
+      },
+      {
+       "action": "notify.mobile_app_iphone_14_tessa",
+       "data": {
+        "title": "Koffiemachine uit",
+        "message": "Een uur niet gebruikt en automatisch uitgezet.",
+        "data": {
+         "tag": "koffie",
+         "actions": [
+          {
+           "action": "KOFFIE_WEER_AAN",
+           "title": "Weer aanzetten"
+          }
+         ]
+        }
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,13 @@
+{
+ "id": "warm_water_te_koud",
+ "alias": "Warm water: waarschuwing te koud",
+ "description": "Vangnet: waarschuwt als de boiler een uur lang onder 33 °C zit (normaal warmt hij bij 40 °C instelling al op vanaf 35 °C).",
+ "mode": "single",
+ "triggers": [
+  {"trigger": "numeric_state", "entity_id": "sensor.luxtronik_290716_0122_dhw_temperature", "below": 33, "for": {"hours": 1}}
+ ],
+ "actions": [
+  {"action": "notify.mobile_app_iphone_van_maarten",
+   "data": {"title": "Warm water te koud", "message": "Boiler is al een uur onder 33 °C ({{ states('sensor.luxtronik_290716_0122_dhw_temperature') }} °C). Instelling: {{ states('number.luxtronik_290716_0122_dhw_target_temperature') }} °C. Controleer de warmtepomp of zet de temperatuur hoger in de app."}}
+ ]
+}

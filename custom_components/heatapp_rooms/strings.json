@@ -1,0 +1,19 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "heatapp! Gateway + Control Box",
+        "data": {
+          "gateway_host": "Gateway host",
+          "gateway_user": "Gateway login",
+          "gateway_password": "Gateway password",
+          "controlbox_host": "Control Box host",
+          "controlbox_user": "Control Box login",
+          "controlbox_password": "Control Box password"
+        }
+      }
+    },
+    "error": {"cannot_connect": "Could not log in or read rooms"},
+    "abort": {"already_configured": "Already configured"}
+  }
+}

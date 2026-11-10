@@ -1,0 +1,58 @@
+[
+ {
+  "machine": "Washing machine",
+  "scenario": "As now",
+  "eur_per_kwh": 0.268,
+  "per_year_eur": 70.4,
+  "saving_per_year_eur": 0.0
+ },
+ {
+  "machine": "Washing machine",
+  "scenario": "Always at 02:00",
+  "eur_per_kwh": 0.274,
+  "per_year_eur": 72.07,
+  "saving_per_year_eur": -1.67
+ },
+ {
+  "machine": "Washing machine",
+  "scenario": "Cheapest night hour",
+  "eur_per_kwh": 0.267,
+  "per_year_eur": 70.18,
+  "saving_per_year_eur": 0.23
+ },
+ {
+  "machine": "Washing machine",
+  "scenario": "Cheapest hour within 24h",
+  "eur_per_kwh": 0.185,
+  "per_year_eur": 48.61,
+  "saving_per_year_eur": 21.79
+ },
+ {
+  "machine": "Dryer",
+  "scenario": "As now",
+  "eur_per_kwh": 0.27,
+  "per_year_eur": 30.5,
+  "saving_per_year_eur": 0.0
+ },
+ {
+  "machine": "Dryer",
+  "scenario": "Always at 02:00",
+  "eur_per_kwh": 0.269,
+  "per_year_eur": 30.42,
+  "saving_per_year_eur": 0.08
+ },
+ {
+  "machine": "Dryer",
+  "scenario": "Cheapest night hour",
+  "eur_per_kwh": 0.265,
+  "per_year_eur": 29.97,
+  "saving_per_year_eur": 0.53
+ },
+ {
+  "machine": "Dryer",
+  "scenario": "Cheapest hour within 24h",
+  "eur_per_kwh": 0.177,
+  "per_year_eur": 19.97,
+  "saving_per_year_eur": 10.53
+ }
+]

@@ -1,0 +1,43 @@
+{
+ "alias": "Oven uit",
+ "icon": "mdi:stove",
+ "mode": "single",
+ "description": "Stopt het lopende ovenprogramma en zet de oven uit.",
+ "sequence": [
+  {
+   "if": [
+    {
+     "condition": "state",
+     "entity_id": "sensor.oven_operation_state",
+     "state": [
+      "run",
+      "pause",
+      "delayedstart",
+      "actionrequired"
+     ]
+    }
+   ],
+   "then": [
+    {
+     "action": "button.press",
+     "target": {
+      "entity_id": "button.oven_stop_program"
+     },
+     "continue_on_error": true
+    },
+    {
+     "delay": {
+      "seconds": 3
+     }
+    }
+   ]
+  },
+  {
+   "action": "switch.turn_off",
+   "target": {
+    "entity_id": "switch.oven_power"
+   },
+   "continue_on_error": true
+  }
+ ]
+}

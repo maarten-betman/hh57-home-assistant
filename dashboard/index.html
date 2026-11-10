@@ -1,0 +1,342 @@
+<style>
+  .ek { font-family: var(--font-anthropic-sans); display: grid; gap: var(--cds-gap-xl); max-width: 72rem; margin-inline: auto; }
+  .ek-head h1 { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); margin: 0; text-wrap: balance; }
+  .ek-head p { margin: var(--cds-gap-xs) 0 0; color: var(--color-fg-muted); max-width: 65ch; line-height: 1.5; }
+  .ek-takeaway b { color: var(--color-fg); font-weight: 600; }
+  .ek-tiles { display: grid; gap: var(--cds-gap-md); grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr)); }
+  .ek-tile, .ek-card { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-lg); min-width: 0; }
+  .ek-tile .lbl { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); letter-spacing: .02em; }
+  .ek-tile .big { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); font-variant-numeric: tabular-nums; margin-top: var(--cds-gap-xs); }
+  .ek-tile .sub { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); margin-top: var(--cds-gap-xs); font-variant-numeric: tabular-nums; }
+  .ek-tile.total { border-color: var(--color-fg-muted); }
+  .ek-swatch { display: inline-block; width: .6rem; height: .6rem; border-radius: 2px; margin-right: .35rem; vertical-align: baseline; }
+  .ek-grid { display: grid; gap: var(--cds-gap-md); grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr)); }
+  .ek-card h2 { font-size: var(--cds-font-size-heading); font-weight: var(--cds-font-weight-medium); margin: 0; }
+  .ek-card .note { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); margin: var(--cds-gap-xs) 0 var(--cds-gap-md); line-height: 1.45; }
+  .ek-chart { position: relative; min-height: 260px; }
+  .ek-legend { display: flex; flex-wrap: wrap; gap: var(--cds-gap-md); font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); margin-bottom: var(--cds-gap-sm); }
+  .ek-tip { position: absolute; pointer-events: none; background: var(--cds-surface-popover); border: 1px solid var(--cds-border); border-radius: var(--cds-radius); box-shadow: var(--cds-shadow-popover); padding: var(--cds-pad-xs) var(--cds-pad-sm); font-size: var(--cds-font-size-caption); white-space: nowrap; font-variant-numeric: tabular-nums; z-index: 2; }
+  .ek-tip .when { color: var(--cds-text-secondary); margin-bottom: 2px; }
+  .ek-tablewrap { overflow-x: auto; }
+  .ek-table { width: 100%; border-collapse: collapse; font-size: var(--cds-font-size-body); font-variant-numeric: tabular-nums; }
+  .ek-table th { text-align: left; font-weight: var(--cds-font-weight-medium); font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); padding: var(--cds-pad-xs) var(--cds-pad-sm); border-bottom: 1px solid var(--color-border-line); }
+  .ek-table td { padding: var(--cds-pad-xs) var(--cds-pad-sm); border-bottom: 1px solid var(--color-border-line); }
+  .ek-table .num { text-align: right; }
+  .ek-table tr.best td { font-weight: 600; }
+  .ek-pos { color: var(--color-ok); }
+  .ek-neg { color: var(--color-bad); }
+  .ek-foot { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); line-height: 1.5; max-width: 75ch; }
+  .ek-foot ul { margin: var(--cds-gap-xs) 0 0; padding-left: 1.1rem; }
+  .ek-fail { display: flex; align-items: center; justify-content: center; gap: .4rem; min-height: inherit; color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); }
+  .ek-fail::before { content: ""; width: .375rem; height: .375rem; border-radius: 50%; background: var(--color-bad); }
+  [data-dash-source-state=empty] { color: transparent; }
+  [data-dash-source-state=refreshing] { opacity: .5; transition: opacity var(--cds-dur-slow); }
+</style>
+
+<div class="ek">
+  <header class="ek-head">
+    <h1 id="title">Home energy costs</h1>
+    <p class="ek-takeaway dash-skeleton" id="takeaway">—</p>
+  </header>
+
+  <section class="ek-tiles" id="tiles">
+    <div class="ek-tile total">
+      <div class="lbl">Three machines together · per year</div>
+      <div class="big dash-skeleton" data-source="total" data-field="per_year_eur" data-row="0">—</div>
+      <div class="sub">≈ <span class="dash-skeleton" data-source="total" data-field="per_month_eur" data-row="0">—</span> per month</div>
+    </div>
+    <div class="ek-tile" data-m="Washing machine">
+      <div class="lbl"><span class="ek-swatch"></span>Washing machine · per year</div>
+      <div class="big dash-skeleton" data-source="machines" data-field="per_year_eur" data-where="machine=Washing machine">—</div>
+      <div class="sub"><span class="dash-skeleton" data-source="machines" data-field="per_month_eur" data-where="machine=Washing machine">—</span> per month · <span data-source="machines" data-field="kwh" data-where="machine=Washing machine">—</span> kWh measured</div>
+    </div>
+    <div class="ek-tile" data-m="Dryer">
+      <div class="lbl"><span class="ek-swatch"></span>Dryer · per year</div>
+      <div class="big dash-skeleton" data-source="machines" data-field="per_year_eur" data-where="machine=Dryer">—</div>
+      <div class="sub"><span class="dash-skeleton" data-source="machines" data-field="per_month_eur" data-where="machine=Dryer">—</span> per month · <span data-source="machines" data-field="kwh" data-where="machine=Dryer">—</span> kWh measured</div>
+    </div>
+    <div class="ek-tile" data-m="Coffee machine">
+      <div class="lbl"><span class="ek-swatch"></span>Coffee machine · per year</div>
+      <div class="big dash-skeleton" data-source="machines" data-field="per_year_eur" data-where="machine=Coffee machine">—</div>
+      <div class="sub"><span class="dash-skeleton" data-source="machines" data-field="per_month_eur" data-where="machine=Coffee machine">—</span> per month · <span data-source="machines" data-field="kwh" data-where="machine=Coffee machine">—</span> kWh measured</div>
+    </div>
+  </section>
+
+  <section class="ek-grid">
+    <div class="ek-card" id="monthly-card">
+      <h2>Cost per month</h2>
+      <p class="note">What each machine cost, at the hourly Zonneplan price that applied when it ran. October is the month so far.</p>
+      <div class="ek-legend" id="monthly-legend" data-source="monthly"></div>
+      <div class="ek-chart dash-skeleton" id="monthly-chart" data-source="monthly"></div>
+    </div>
+    <div class="ek-card" id="hours-card">
+      <h2>When electricity is cheap</h2>
+      <p class="note">Average price per kWh by hour of the day, 2026. Midday is cheapest because of solar on the grid; the night is barely cheaper than the evening.</p>
+      <div class="ek-chart dash-skeleton" id="hours-chart" data-source="price_by_hour"></div>
+    </div>
+  </section>
+
+  <section class="ek-card" id="timing-card">
+    <h2>Does running the laundry at night help?</h2>
+    <p class="note">Every wash and dryer run from 2026 replayed at a different time, priced with that day's real hourly rates. Saving is per year compared with how we run them now.</p>
+    <div class="ek-tablewrap">
+      <table class="ek-table" id="timing-table" data-source="timing" data-row-key="machine,scenario">
+        <thead><tr>
+          <th data-field="machine">Machine</th>
+          <th data-field="scenario">When it runs</th>
+          <th class="num" data-field="eur_per_kwh">Price per kWh</th>
+          <th class="num" data-field="per_year_eur">Cost per year</th>
+          <th class="num" data-field="saving_per_year_eur">Saving per year</th>
+        </tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer class="ek-foot" id="notes">
+    <strong>About these numbers</strong>
+    <ul>
+      <li>Measured by smart plugs in Home Assistant, multiplied hour by hour by the Zonneplan dynamic tariff (taxes included). Yearly figures are scaled up from the days each plug has been measuring.</li>
+      <li>"Cheapest hour within 24h" assumes perfect timing; a delay start that lands between 11:00 and 15:00 gets close to it.</li>
+      <li>Not included: the heat pump and the car. Neither has a plug meter, so their electricity use can't be measured separately.</li>
+    </ul>
+  </footer>
+</div>
+
+<script>
+(() => {
+  const ORDER = ['Washing machine', 'Dryer', 'Coffee machine'];
+  const eur = (v, d = 2) => '€' + Number(v).toLocaleString('en', { minimumFractionDigits: d, maximumFractionDigits: d });
+  const kwh = v => Number(v).toLocaleString('en', { maximumFractionDigits: 0 });
+  const colorOf = m => dash.colors[ORDER.indexOf(m)];
+
+  dash.calc('total', {
+    inputs: ['machines'],
+    title: 'Three machines per year',
+    description: 'Sum of the yearly and monthly cost of the washing machine, dryer and coffee machine.',
+    fn: (machines) => [{
+      per_year_eur: Math.round(machines.reduce((s, r) => s + Number(r.per_year_eur), 0) * 100) / 100,
+      per_month_eur: Math.round(machines.reduce((s, r) => s + Number(r.per_month_eur), 0) * 100) / 100,
+    }],
+  });
+  dash.calc('laundry_savings', {
+    inputs: ['timing'],
+    title: 'Laundry savings by timing',
+    description: 'Washing machine plus dryer: yearly saving at night versus at the cheapest hour.',
+    fn: (timing) => {
+      const sum = s => Math.round(timing.filter(r => r.scenario === s).reduce((a, r) => a + Number(r.saving_per_year_eur), 0) * 100) / 100;
+      return [{ night_eur: sum('Cheapest night hour'), best_eur: sum('Cheapest hour within 24h') }];
+    },
+  });
+
+  const tip = (box) => {
+    let t = box.querySelector('.ek-tip');
+    if (!t) { t = document.createElement('div'); t.className = 'ek-tip'; t.hidden = true; box.appendChild(t); }
+    return t;
+  };
+  const placeTip = (t, box, x, y) => {
+    t.hidden = false;
+    const w = t.offsetWidth, bw = box.clientWidth;
+    t.style.left = Math.max(0, Math.min(bw - w, x - w / 2)) + 'px';
+    t.style.top = Math.max(0, y - t.offsetHeight - 10) + 'px';
+  };
+  const fail = (el) => { el.classList.remove('dash-skeleton'); el.innerHTML = ''; const f = document.createElement('div'); f.className = 'ek-fail'; f.textContent = 'Failed to load'; el.appendChild(f); };
+  const fill = (sel, text) => document.querySelectorAll(sel).forEach(el => { el.textContent = text; el.classList.remove('dash-skeleton'); });
+
+  function drawTiles() {
+    const m = dash.data('machines'), t = dash.data('total');
+    document.querySelectorAll('.ek-tile[data-m] .ek-swatch').forEach(s => { s.style.background = colorOf(s.closest('.ek-tile').dataset.m); });
+    if (m.status === 'ok') {
+      m.data.forEach(r => {
+        const w = `[data-where="machine=${r.machine}"]`;
+        fill(`[data-source="machines"][data-field="per_year_eur"]${w}`, eur(r.per_year_eur, 0));
+        fill(`[data-source="machines"][data-field="per_month_eur"]${w}`, eur(r.per_month_eur));
+        fill(`[data-source="machines"][data-field="kwh"]${w}`, kwh(r.kwh));
+      });
+    } else if (m.status !== 'loading') fill('[data-source="machines"]', '—');
+    if (t.status === 'ok' && t.data[0]) {
+      fill('[data-source="total"][data-field="per_year_eur"]', eur(t.data[0].per_year_eur, 0));
+      fill('[data-source="total"][data-field="per_month_eur"]', eur(t.data[0].per_month_eur));
+    } else if (t.status !== 'loading') fill('[data-source="total"]', '—');
+  }
+
+  function drawTakeaway() {
+    const el = document.getElementById('takeaway');
+    const t = dash.data('total'), s = dash.data('laundry_savings');
+    if (t.status !== 'ok' || s.status !== 'ok' || !t.data[0] || !s.data[0]) { el.textContent = '—'; return; }
+    el.classList.remove('dash-skeleton');
+    el.textContent = '';
+    const add = (txt, attrs) => {
+      if (!attrs) { el.appendChild(document.createTextNode(txt)); return; }
+      const b = document.createElement('b'); b.textContent = txt;
+      Object.entries(attrs).forEach(([k, v]) => b.setAttribute(k, v)); el.appendChild(b);
+    };
+    add('The washing machine, dryer and coffee machine cost us about ');
+    add(eur(t.data[0].per_year_eur, 0), { 'data-source': 'total', 'data-field': 'per_year_eur', 'data-row': '0' });
+    add(' a year. Running the laundry at night saves only ');
+    add(eur(s.data[0].night_eur), { 'data-source': 'laundry_savings', 'data-field': 'night_eur', 'data-row': '0' });
+    add(' a year; running it around midday saves up to ');
+    add(eur(s.data[0].best_eur, 0), { 'data-source': 'laundry_savings', 'data-field': 'best_eur', 'data-row': '0' });
+    add('.');
+  }
+
+  function drawMonthly() {
+    const box = document.getElementById('monthly-chart'), legend = document.getElementById('monthly-legend');
+    const d = dash.data('monthly');
+    box.querySelectorAll('svg').forEach(n => n.remove());
+    legend.textContent = '';
+    if (d.status === 'error') return fail(box);
+    if (d.status !== 'ok') return;
+    box.classList.remove('dash-skeleton');
+    box.querySelector('.ek-fail')?.remove();
+
+    ORDER.forEach(m => {
+      const s = document.createElement('span');
+      const sw = document.createElement('span'); sw.className = 'ek-swatch'; sw.style.background = colorOf(m);
+      s.appendChild(sw); s.appendChild(document.createTextNode(m)); legend.appendChild(s);
+    });
+
+    const rows = d.data.filter(r => ORDER.includes(r.machine));
+    const months = [...new Set(rows.map(r => r.month))].sort();
+    const partial = new Set(rows.filter(r => r.partial === true || r.partial === 'true').map(r => r.month));
+    const table = months.map(mo => {
+      const o = { month: mo };
+      ORDER.forEach(m => { const r = rows.find(x => x.month === mo && x.machine === m); o[m] = r ? Number(r.cost_eur) : 0; });
+      return o;
+    });
+    const series = d3.stack().keys(ORDER)(table);
+    const W = box.clientWidth || 600, H = 260, m = { t: 8, r: 4, b: 26, l: 40 };
+    const x = d3.scaleBand(months, [m.l, W - m.r]).padding(0.28);
+    const ymax = d3.max(table, o => ORDER.reduce((s, k) => s + o[k], 0)) || 1;
+    const y = d3.scaleLinear([0, ymax * 1.08], [H - m.b, m.t]).nice();
+    const fmtMonth = mo => d3.utcFormat('%b')(new Date(mo + '-01T00:00:00Z'));
+
+    const svg = d3.select(box).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`).attr('role', 'img')
+      .attr('aria-label', 'Stacked bars of monthly cost per machine');
+    svg.append('g').selectAll('line').data(y.ticks(4)).join('line')
+      .attr('x1', m.l).attr('x2', W - m.r).attr('y1', v => y(v)).attr('y2', v => y(v))
+      .attr('stroke', 'var(--cds-chart-grid)').attr('stroke-width', 1);
+    svg.append('g').attr('transform', `translate(${m.l - 6},0)`).selectAll('text').data(y.ticks(4)).join('text')
+      .attr('y', v => y(v)).attr('dy', '0.32em').attr('text-anchor', 'end').attr('fill', 'var(--color-fg-muted)')
+      .attr('font-size', 'var(--cds-font-size-caption)').text(v => '€' + v);
+    const step = x.bandwidth() < 22 ? 2 : 1;
+    svg.append('g').selectAll('text').data(months.filter((_, i) => i % step === 0)).join('text')
+      .attr('x', mo => x(mo) + x.bandwidth() / 2).attr('y', H - 8).attr('text-anchor', 'middle')
+      .attr('fill', 'var(--color-fg-muted)').attr('font-size', 'var(--cds-font-size-caption)')
+      .text(mo => fmtMonth(mo) + (partial.has(mo) ? '*' : ''));
+    const bw = Math.min(32, x.bandwidth());
+    const off = (x.bandwidth() - bw) / 2;
+    series.forEach((s, i) => {
+      svg.append('g').selectAll('rect').data(s).join('rect')
+        .attr('x', p => x(p.data.month) + off).attr('width', bw)
+        .attr('y', p => y(p[1])).attr('height', p => Math.max(0, y(p[0]) - y(p[1])))
+        .attr('rx', i === ORDER.length - 1 ? 3 : 0)
+        .attr('fill', dash.colors[i]).attr('opacity', p => partial.has(p.data.month) ? 0.45 : 1);
+    });
+    const t = tip(box);
+    svg.append('g').selectAll('rect').data(table).join('rect')
+      .attr('x', o => x(o.month)).attr('width', x.bandwidth()).attr('y', m.t).attr('height', H - m.b - m.t)
+      .attr('fill', 'transparent')
+      .on('mousemove', (ev, o) => {
+        t.textContent = '';
+        const w = document.createElement('div'); w.className = 'when';
+        w.textContent = d3.utcFormat('%B %Y')(new Date(o.month + '-01T00:00:00Z')) + (partial.has(o.month) ? ' (so far)' : '');
+        t.appendChild(w);
+        ORDER.slice().reverse().forEach(k => {
+          const line = document.createElement('div');
+          const sw = document.createElement('span'); sw.className = 'ek-swatch'; sw.style.background = colorOf(k);
+          line.appendChild(sw); line.appendChild(document.createTextNode(`${k}  ${eur(o[k])}`)); t.appendChild(line);
+        });
+        const tot = document.createElement('div'); tot.textContent = 'Total  ' + eur(ORDER.reduce((s, k) => s + o[k], 0)); tot.style.marginTop = '2px';
+        t.appendChild(tot);
+        placeTip(t, box, x(o.month) + x.bandwidth() / 2, y(ORDER.reduce((s, k) => s + o[k], 0)));
+      })
+      .on('mouseleave', () => { t.hidden = true; });
+  }
+
+  function drawHours() {
+    const box = document.getElementById('hours-chart');
+    const d = dash.data('price_by_hour');
+    box.querySelectorAll('svg').forEach(n => n.remove());
+    if (d.status === 'error') return fail(box);
+    if (d.status !== 'ok') return;
+    box.classList.remove('dash-skeleton');
+    box.querySelector('.ek-fail')?.remove();
+
+    const rows = d.data.map(r => ({ hour: Number(r.hour), p: Number(r.avg_eur_per_kwh) })).sort((a, b) => a.hour - b.hour);
+    const W = box.clientWidth || 600, H = 260, m = { t: 22, r: 4, b: 26, l: 44 };
+    const x = d3.scaleBand(rows.map(r => r.hour), [m.l, W - m.r]).padding(0.2);
+    const lo = d3.min(rows, r => r.p), hi = d3.max(rows, r => r.p);
+    const y = d3.scaleLinear([0, hi * 1.08], [H - m.b, m.t]).nice();
+    const cheap = new Set(rows.slice().sort((a, b) => a.p - b.p).slice(0, 4).map(r => r.hour));
+    const dear = new Set(rows.slice().sort((a, b) => b.p - a.p).slice(0, 4).map(r => r.hour));
+
+    const svg = d3.select(box).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`).attr('role', 'img')
+      .attr('aria-label', 'Average electricity price by hour of day');
+    svg.append('g').selectAll('line').data(y.ticks(4)).join('line')
+      .attr('x1', m.l).attr('x2', W - m.r).attr('y1', v => y(v)).attr('y2', v => y(v))
+      .attr('stroke', 'var(--cds-chart-grid)').attr('stroke-width', 1);
+    svg.append('g').attr('transform', `translate(${m.l - 6},0)`).selectAll('text').data(y.ticks(4)).join('text')
+      .attr('y', v => y(v)).attr('dy', '0.32em').attr('text-anchor', 'end').attr('fill', 'var(--color-fg-muted)')
+      .attr('font-size', 'var(--cds-font-size-caption)').text(v => '€' + v.toFixed(2));
+    const every = x.bandwidth() < 18 ? 6 : 3;
+    svg.append('g').selectAll('text').data(rows.filter(r => r.hour % every === 0)).join('text')
+      .attr('x', r => x(r.hour) + x.bandwidth() / 2).attr('y', H - 8).attr('text-anchor', 'middle')
+      .attr('fill', 'var(--color-fg-muted)').attr('font-size', 'var(--cds-font-size-caption)')
+      .text(r => String(r.hour).padStart(2, '0') + ':00');
+    svg.append('g').selectAll('rect').data(rows).join('rect')
+      .attr('x', r => x(r.hour)).attr('width', x.bandwidth())
+      .attr('y', r => y(r.p)).attr('height', r => y(0) - y(r.p)).attr('rx', 3)
+      .attr('fill', r => cheap.has(r.hour) ? 'var(--color-ok)' : dear.has(r.hour) ? 'var(--cds-chart-status-critical)' : 'var(--cds-chart-muted)');
+    const label = (set, text) => {
+      const hs = [...set].sort((a, b) => a - b);
+      const cx = (x(hs[0]) + x(hs[hs.length - 1]) + x.bandwidth()) / 2;
+      const top = y(d3.max(rows.filter(r => set.has(r.hour)), r => r.p));
+      svg.append('text').attr('x', Math.max(m.l + 30, Math.min(W - m.r - 30, cx))).attr('y', top - 6).attr('text-anchor', 'middle')
+        .attr('fill', 'var(--color-fg-muted)').attr('font-size', 'var(--cds-font-size-caption)').text(text);
+    };
+    label(cheap, 'cheapest');
+    label(dear, 'most expensive');
+
+    const t = tip(box);
+    svg.append('g').selectAll('rect').data(rows).join('rect')
+      .attr('x', r => x(r.hour) - x.step() * x.paddingInner() / 2).attr('width', x.step()).attr('y', m.t).attr('height', H - m.b - m.t)
+      .attr('fill', 'transparent')
+      .on('mousemove', (ev, r) => {
+        t.textContent = '';
+        const w = document.createElement('div'); w.className = 'when';
+        w.textContent = `${String(r.hour).padStart(2, '0')}:00–${String((r.hour + 1) % 24).padStart(2, '0')}:00`;
+        const v = document.createElement('div'); v.textContent = `€${r.p.toFixed(3)} per kWh`;
+        t.appendChild(w); t.appendChild(v);
+        placeTip(t, box, x(r.hour) + x.bandwidth() / 2, y(r.p));
+      })
+      .on('mouseleave', () => { t.hidden = true; });
+  }
+
+  function drawTiming() {
+    const tbody = document.querySelector('#timing-table tbody');
+    const d = dash.data('timing');
+    tbody.textContent = '';
+    if (d.status !== 'ok') return;
+    const rows = d.data.slice();
+    const bestByMachine = {};
+    rows.forEach(r => { const v = Number(r.saving_per_year_eur); if (!(r.machine in bestByMachine) || v > bestByMachine[r.machine]) bestByMachine[r.machine] = v; });
+    rows.forEach(r => {
+      const tr = document.createElement('tr');
+      tr.dataset.key = [r.machine, r.scenario].map(encodeURIComponent).join(',');
+      const save = Number(r.saving_per_year_eur);
+      if (save === bestByMachine[r.machine] && save > 0) tr.className = 'best';
+      const cells = [
+        [r.machine, ''], [r.scenario, ''],
+        ['€' + Number(r.eur_per_kwh).toFixed(3), 'num'],
+        [eur(r.per_year_eur), 'num'],
+        [(save < 0 ? '−' : '') + eur(Math.abs(save)), 'num ' + (save > 1 ? 'ek-pos' : save < 0 ? 'ek-neg' : '')],
+      ];
+      cells.forEach(([txt, cls]) => { const td = document.createElement('td'); td.textContent = txt; if (cls.trim()) td.className = cls.trim(); tr.appendChild(td); });
+      tbody.appendChild(tr);
+    });
+  }
+
+  dash.onData(() => { drawTiles(); drawTakeaway(); drawMonthly(); drawHours(); drawTiming(); });
+})();
+</script>

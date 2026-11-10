@@ -1,0 +1,45 @@
+{
+  "id": "was_droger_klaar_melding",
+  "alias": "Wasmachine/droger klaar melding",
+  "description": "Stuurt een melding naar iedereen die zich heeft aangemeld (input_boolean.<apparaat>_melding_<persoon>) wanneer de wasmachine of droger klaar is.",
+  "mode": "parallel",
+  "triggers": [
+    {"trigger": "state", "entity_id": "sensor.wasmachine_job_state", "to": "finish", "id": "wasmachine"},
+    {"trigger": "state", "entity_id": "sensor.droger_job_state", "to": "finished", "id": "droger"}
+  ],
+  "conditions": [],
+  "actions": [
+    {
+      "variables": {
+        "titel": "{{ 'Wasmachine klaar 🧺' if trigger.id == 'wasmachine' else 'Droger klaar 👕' }}",
+        "bericht": "{{ 'De was is klaar, tijd om hem eruit te halen.' if trigger.id == 'wasmachine' else 'De droger is klaar, tijd om de was eruit te halen.' }}",
+        "ontvangers": [
+          {"persoon": "maarten", "notify": "notify.mobile_app_iphone_van_maarten"},
+          {"persoon": "tessa", "notify": "notify.mobile_app_iphone_14_tessa"}
+        ]
+      }
+    },
+    {
+      "repeat": {
+        "for_each": "{{ ontvangers }}",
+        "sequence": [
+          {
+            "if": [
+              {"condition": "template", "value_template": "{{ is_state('input_boolean.' ~ trigger.id ~ '_melding_' ~ repeat.item.persoon, 'on') }}"}
+            ],
+            "then": [
+              {
+                "action": "{{ repeat.item.notify }}",
+                "data": {
+                  "title": "{{ titel }}",
+                  "message": "{{ bericht }}",
+                  "data": {"tag": "{{ trigger.id }}_klaar", "url": "/mobiel-dashboard/wassen"}
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

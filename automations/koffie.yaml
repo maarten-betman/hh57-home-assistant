@@ -1,0 +1,72 @@
+# Coffee machine automations for Home Assistant (switch.koffie = Shelly Plus Plug S)
+# Paste into Settings → Automations → ⋮ → Edit in YAML, one automation per block.
+
+# 1. SUPERSEDED: the installed version is automations/koffie_auto_off.json (60 min without use,
+#    restarts on long power bursts, warning at 55 min). Kept below for reference.
+# 1. Auto-off: turn the machine off after it has been on for 60 minutes.
+#    Sends a notification with a button to switch it back on.
+- id: koffie_auto_off
+  alias: "Koffie: automatisch uit na 60 minuten"
+  mode: restart
+  triggers:
+    - trigger: state
+      entity_id: switch.koffie
+      to: "on"
+      for: { minutes: 60 }
+      id: timeout
+    - trigger: event
+      event_type: mobile_app_notification_action
+      event_data: { action: KOFFIE_WEER_AAN }
+      id: weer_aan
+  actions:
+    - choose:
+        - conditions: [{ condition: trigger, id: timeout }]
+          sequence:
+            - action: switch.turn_off
+              target: { entity_id: switch.koffie }
+            - action: notify.mobile_app_iphone_van_maarten
+              data: &melding
+                title: "Koffiemachine uit"
+                message: "Stond 60 minuten aan en is automatisch uitgezet."
+                data:
+                  tag: koffie
+                  actions:
+                    - action: KOFFIE_WEER_AAN
+                      title: "Weer aanzetten"
+            - action: notify.mobile_app_iphone_14_tessa
+              data: *melding
+        - conditions: [{ condition: trigger, id: weer_aan }]
+          sequence:
+            - action: switch.turn_on
+              target: { entity_id: switch.koffie }
+
+# 2. Safety net: never leave it on overnight.
+- id: koffie_avond_uit
+  alias: "Koffie: uit om 22:00"
+  triggers:
+    - trigger: time
+      at: "22:00:00"
+  conditions:
+    - condition: state
+      entity_id: switch.koffie
+      state: "on"
+  actions:
+    - action: switch.turn_off
+      target: { entity_id: switch.koffie }
+
+# 3. Optional: pre-heat on weekday mornings so it's ready when you come down.
+#    Combined with #1 it switches off again at 08:15 unless you use it.
+- id: koffie_ochtend_aan
+  alias: "Koffie: voorverwarmen op werkdagen"
+  triggers:
+    - trigger: time
+      at: "07:15:00"
+  conditions:
+    - condition: time
+      weekday: [mon, tue, wed, thu, fri]
+    - condition: state
+      entity_id: person.maarten_betman
+      state: home
+  actions:
+    - action: switch.turn_on
+      target: { entity_id: switch.koffie }

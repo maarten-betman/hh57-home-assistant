@@ -1,0 +1,34 @@
+[
+ {
+  "name": "Koffie: automatisch uit na 60 minuten",
+  "device": "Coffee machine",
+  "what_it_does": "Turns the coffee machine off after 60 minutes on, and sends a notification with a button to turn it back on.",
+  "status": "On",
+  "last_triggered": "Not yet",
+  "saving_per_year_eur": 65
+ },
+ {
+  "name": "Koffie: uit om 22:00",
+  "device": "Coffee machine",
+  "what_it_does": "Turns the coffee machine off at 22:00 if it's still on, so it never stays on overnight.",
+  "status": "On",
+  "last_triggered": "Not yet",
+  "saving_per_year_eur": null
+ },
+ {
+  "name": "Robb smarrt 8-button switch keuken",
+  "device": "Kitchen",
+  "what_it_does": "Handles the 8-button switch in the kitchen.",
+  "status": "On",
+  "last_triggered": "2026-10-08T18:53+02:00",
+  "saving_per_year_eur": null
+ },
+ {
+  "name": "Toggle lichten kantoor",
+  "device": "Office",
+  "what_it_does": "Toggles the office lights.",
+  "status": "On",
+  "last_triggered": "2026-10-08T21:51+02:00",
+  "saving_per_year_eur": null
+ }
+]
