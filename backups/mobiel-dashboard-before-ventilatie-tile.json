@@ -1,0 +1,2282 @@
+{
+ "views": [
+  {
+   "title": "Thuis",
+   "path": "thuis",
+   "icon": "mdi:home",
+   "type": "sections",
+   "max_columns": 2,
+   "dense_section_placement": true,
+   "badges": [
+    {
+     "type": "entity",
+     "entity": "person.maarten_betman",
+     "show_state": true,
+     "name": "Maarten",
+     "show_name": true
+    },
+    {
+     "type": "entity",
+     "entity": "person.tessa",
+     "show_state": true,
+     "name": "Tessa",
+     "show_name": true
+    },
+    {
+     "type": "entity",
+     "entity": "sensor.zonneplan_current_usage",
+     "color": "yellow"
+    },
+    {
+     "type": "entity",
+     "entity": "sensor.afvalstoffendienstkalender_vandaag",
+     "color": "green",
+     "visibility": [
+      {
+       "condition": "state",
+       "entity": "sensor.afvalstoffendienstkalender_vandaag",
+       "state_not": "Geen"
+      }
+     ]
+    }
+   ],
+   "sections": [
+    {
+     "type": "grid",
+     "cards": [
+      {
+       "type": "heading",
+       "heading": "Afval",
+       "heading_style": "title",
+       "icon": "mdi:trash-can"
+      },
+      {
+       "type": "custom:trash-card",
+       "entities": [
+        "calendar.afvalbeheer_afvalstoffendienstkalender"
+       ],
+       "card_style": "card",
+       "layout": "horizontal",
+       "day_style": "counter",
+       "next_days": 60,
+       "event_grouping": true,
+       "color_mode": "background",
+       "with_label": true,
+       "alignment_style": "left",
+       "icon_size": 42,
+       "grid_options": {
+        "columns": 12
+       },
+       "pattern": [
+        {
+         "type": "paper",
+         "label": "Papier",
+         "pattern": "Papier",
+         "icon": "mdi:newspaper-variant-multiple",
+         "color": "blue"
+        },
+        {
+         "type": "organic",
+         "label": "GFT",
+         "pattern": "GFT",
+         "icon": "mdi:leaf",
+         "color": "green"
+        },
+        {
+         "type": "recycle",
+         "label": "PMD",
+         "pattern": "PMD",
+         "icon": "mdi:recycle",
+         "color": "yellow"
+        },
+        {
+         "type": "waste",
+         "label": "Restafval",
+         "pattern": "Restafval",
+         "icon": "mdi:trash-can",
+         "color": "grey"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "type": "grid",
+     "cards": [
+      {
+       "type": "heading",
+       "heading": "Snel",
+       "heading_style": "title",
+       "icon": "mdi:gesture-tap-button"
+      },
+      {
+       "type": "button",
+       "name": "Alles uit",
+       "icon": "mdi:power",
+       "show_state": false,
+       "tap_action": {
+        "action": "perform-action",
+        "perform_action": "light.turn_off",
+        "target": {
+         "entity_id": "all"
+        }
+       },
+       "grid_options": {
+        "columns": 4,
+        "rows": 2
+       }
+      },
+      {
+       "type": "button",
+       "entity": "switch.koffie",
+       "name": "Koffie",
+       "icon": "mdi:coffee",
+       "show_state": true,
+       "tap_action": {
+        "action": "toggle"
+       },
+       "grid_options": {
+        "columns": 4,
+        "rows": 2
+       }
+      },
+      {
+       "type": "button",
+       "name": "Avond",
+       "icon": "mdi:weather-night",
+       "show_state": false,
+       "tap_action": {
+        "action": "perform-action",
+        "perform_action": "scene.turn_on",
+        "target": {
+         "entity_id": [
+          "scene.woonkamer_ontspannen",
+          "scene.eettafel_ontspannen",
+          "scene.keuken_ontspannen"
+         ]
+        }
+       },
+       "grid_options": {
+        "columns": 4,
+        "rows": 2
+       }
+      },
+      {
+       "type": "picture",
+       "image": "data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20240%20120%22%3E%3Ctext%20x%3D%22120%22%20y%3D%2268%22%20font-size%3D%2264%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%3E%F0%9F%A5%90%3C/text%3E%3Ctext%20x%3D%22120%22%20y%3D%22112%22%20font-size%3D%2218%22%20text-anchor%3D%22middle%22%20fill%3D%22%238a8a8a%22%20font-family%3D%22-apple-system%2CRoboto%2Csans-serif%22%3ECroissant%3C/text%3E%3C/svg%3E",
+       "alt_text": "Croissantmodus",
+       "tap_action": {
+        "action": "perform-action",
+        "perform_action": "script.croissantmodus",
+        "confirmation": {
+         "text": "Oven aanzetten op 200 °C hetelucht met snel voorverwarmen, 70 minuten?"
+        }
+       },
+       "hold_action": {
+        "action": "more-info",
+        "entity": "script.croissantmodus"
+       },
+       "grid_options": {
+        "columns": 4,
+        "rows": 2
+       }
+      }
+     ]
+    },
+    {
+     "type": "grid",
+     "cards": [
+      {
+       "type": "heading",
+       "heading": "Licht",
+       "heading_style": "title",
+       "icon": "mdi:lightbulb-group",
+       "badges": [
+        {
+         "type": "entity",
+         "entity": "light.woonkamer"
+        }
+       ]
+      },
+      {
+       "type": "tile",
+       "entity": "light.beneden",
+       "name": "Beneden (alles)",
+       "icon": "mdi:home-floor-g",
+       "features_position": "bottom",
+       "features": [
+        {
+         "type": "light-brightness"
+        },
+        {
+         "type": "light-color-temp"
+        }
+       ],
+       "grid_options": {
+        "columns": 12
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "light.woonkamer",
+       "name": "Woonkamer",
+       "features_position": "bottom",
+       "features": [
+        {
+         "type": "light-brightness"
+        }
+       ]
+      },
+      {
+       "type": "tile",
+       "entity": "light.eettafel",
+       "name": "Eettafel",
+       "features_position": "bottom",
+       "features": [
+        {
+         "type": "light-brightness"
+        }
+       ]
+      },
+      {
+       "type": "tile",
+       "entity": "light.keuken",
+       "name": "Keuken",
+       "features_position": "bottom",
+       "features": [
+        {
+         "type": "light-brightness"
+        }
+       ]
+      },
+      {
+       "type": "tile",
+       "entity": "light.kantoor",
+       "name": "Kantoor",
+       "features_position": "bottom",
+       "features": [
+        {
+         "type": "light-brightness"
+        }
+       ]
+      },
+      {
+       "type": "tile",
+       "entity": "light.kantoor_2_2",
+       "name": "Kantoor 2",
+       "features_position": "bottom",
+       "features": [
+        {
+         "type": "light-brightness"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "type": "grid",
+     "cards": [
+      {
+       "type": "heading",
+       "heading": "Ventilatie",
+       "heading_style": "title",
+       "icon": "mdi:fan",
+       "badges": [
+        {
+         "type": "entity",
+         "entity": "fan.ventilatie_ventilatie"
+        }
+       ]
+      },
+      {
+       "type": "tile",
+       "entity": "fan.ventilatie_ventilatie",
+       "name": "ComfoFan",
+       "icon": "mdi:fan",
+       "features_position": "bottom",
+       "features": [
+        {
+         "type": "fan-speed",
+         "style": "icons"
+        }
+       ],
+       "grid_options": {
+        "columns": 12
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "button.ventilatie_hoog_10_minuten",
+       "name": "Hoog 10 min",
+       "icon": "mdi:fan-clock",
+       "hide_state": true,
+       "tap_action": {
+        "action": "perform-action",
+        "perform_action": "button.press",
+        "target": {
+         "entity_id": "button.ventilatie_hoog_10_minuten"
+        }
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "button.ventilatie_hoog_30_minuten",
+       "name": "Hoog 30 min",
+       "icon": "mdi:fan-clock",
+       "hide_state": true,
+       "tap_action": {
+        "action": "perform-action",
+        "perform_action": "button.press",
+        "target": {
+         "entity_id": "button.ventilatie_hoog_30_minuten"
+        }
+       }
+      }
+     ]
+    },
+    {
+     "type": "grid",
+     "cards": [
+      {
+       "type": "heading",
+       "heading": "Muziek & TV",
+       "heading_style": "title",
+       "icon": "mdi:speaker"
+      },
+      {
+       "type": "tile",
+       "entity": "media_player.tafel",
+       "name": "Sonos Tafel",
+       "features_position": "bottom",
+       "features": [
+        {
+         "type": "media-player-volume-slider"
+        },
+        {
+         "type": "media-player-playback"
+        }
+       ]
+      },
+      {
+       "type": "tile",
+       "entity": "media_player.unnamed_room",
+       "name": "Sonos Boekenkast",
+       "features_position": "bottom",
+       "features": [
+        {
+         "type": "media-player-volume-slider"
+        },
+        {
+         "type": "media-player-playback"
+        }
+       ]
+      },
+      {
+       "type": "tile",
+       "entity": "media_player.samsung_tv",
+       "name": "TV woonkamer",
+       "features_position": "bottom",
+       "features": [
+        {
+         "type": "media-player-playback"
+        }
+       ]
+      },
+      {
+       "type": "tile",
+       "entity": "media_player.diw7022_1e1508_2",
+       "name": "Streamer",
+       "features_position": "bottom",
+       "features": [
+        {
+         "type": "media-player-playback"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "type": "grid",
+     "cards": [
+      {
+       "type": "heading",
+       "heading": "Loopt nu",
+       "heading_style": "title",
+       "icon": "mdi:progress-clock",
+       "visibility": [
+        {
+         "condition": "or",
+         "conditions": [
+          {
+           "condition": "state",
+           "entity": "sensor.wasmachine_machine_state",
+           "state_not": "stop"
+          },
+          {
+           "condition": "state",
+           "entity": "sensor.droger_machine_state",
+           "state_not": "stop"
+          },
+          {
+           "condition": "state",
+           "entity": "sensor.oven_operation_state",
+           "state_not": "inactive"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "type": "tile",
+       "entity": "sensor.wasmachine_machine_state",
+       "name": "Wasmachine",
+       "icon": "mdi:washing-machine",
+       "visibility": [
+        {
+         "condition": "state",
+         "entity": "sensor.wasmachine_machine_state",
+         "state_not": "stop"
+        }
+       ]
+      },
+      {
+       "type": "tile",
+       "entity": "sensor.droger_machine_state",
+       "name": "Droger",
+       "icon": "mdi:tumble-dryer",
+       "visibility": [
+        {
+         "condition": "state",
+         "entity": "sensor.droger_machine_state",
+         "state_not": "stop"
+        }
+       ]
+      },
+      {
+       "type": "tile",
+       "entity": "sensor.oven_operation_state",
+       "name": "Oven",
+       "icon": "mdi:stove",
+       "visibility": [
+        {
+         "condition": "state",
+         "entity": "sensor.oven_operation_state",
+         "state_not": "inactive"
+        }
+       ]
+      },
+      {
+       "type": "tile",
+       "entity": "sensor.oven_current_oven_cavity_temperature",
+       "name": "Oventemperatuur",
+       "visibility": [
+        {
+         "condition": "state",
+         "entity": "sensor.oven_operation_state",
+         "state_not": "inactive"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "type": "grid",
+     "cards": [
+      {
+       "type": "heading",
+       "heading": "Boodschappen",
+       "heading_style": "title",
+       "icon": "mdi:cart-outline"
+      },
+      {
+       "type": "todo-list",
+       "entity": "todo.shopping_list"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "Kamers",
+   "path": "kamers",
+   "icon": "mdi:floor-plan",
+   "type": "sections",
+   "max_columns": 2,
+   "dense_section_placement": true,
+   "sections": [
+    {
+     "type": "grid",
+     "cards": [
+      {
+       "type": "heading",
+       "heading": "Woonkamer",
+       "heading_style": "title",
+       "icon": "mdi:sofa"
+      },
+      {
+       "type": "tile",
+       "entity": "light.woonkamer",
+       "name": "Alle lampen",
+       "features_position": "bottom",
+       "features": [
+        {
+         "type": "light-brightness"
+        },
+        {
+         "type": "light-color-temp"
+        }
+       ]
+      },
+      {
+       "type": "tile",
+       "entity": "scene.woonkamer_ontspannen",
+       "name": "Ontspannen",
+       "vertical": true,
+       "hide_state": true,
+       "grid_options": {
+        "columns": 3,
+        "rows": 2
+       },
+       "icon": "mdi:weather-night",
+       "color": "purple"
+      },
+      {
+       "type": "tile",
+       "entity": "scene.woonkamer_lezen",
+       "name": "Lezen",
+       "vertical": true,
+       "hide_state": true,
+       "grid_options": {
+        "columns": 3,
+        "rows": 2
+       },
+       "icon": "mdi:book-open-variant",
+       "color": "amber"
+      },
+      {
+       "type": "tile",
+       "entity": "scene.woonkamer_helder",
+       "name": "Helder",
+       "vertical": true,
+       "hide_state": true,
+       "grid_options": {
+        "columns": 3,
+        "rows": 2
+       },
+       "icon": "mdi:white-balance-sunny",
+       "color": "yellow"
+      },
+      {
+       "type": "tile",
+       "entity": "scene.woonkamer_rusten",
+       "name": "Rusten",
+       "vertical": true,
+       "hide_state": true,
+       "grid_options": {
+        "columns": 3,
+        "rows": 2
+       },
+       "icon": "mdi:sleep",
+       "color": "indigo"
+      }
+     ]
+    },
+    {
+     "type": "grid",
+     "cards": [
+      {
+       "type": "heading",
+       "heading": "Eettafel",
+       "heading_style": "title",
+       "icon": "mdi:table-furniture"
+      },
+      {
+       "type": "tile",
+       "entity": "light.eettafel",
+       "name": "Alle lampen",
+       "features_position": "bottom",
+       "features": [
+        {
+         "type": "light-brightness"
+        },
+        {
+         "type": "light-color-temp"
+        }
+       ]
+      },
+      {
+       "type": "tile",
+       "entity": "scene.eettafel_ontspannen",
+       "name": "Ontspannen",
+       "vertical": true,
+       "hide_state": true,
+       "grid_options": {
+        "columns": 3,
+        "rows": 2
+       },
+       "icon": "mdi:weather-night",
+       "color": "purple"
+      },
+      {
+       "type": "tile",
+       "entity": "scene.eettafel_lezen",
+       "name": "Lezen",
+       "vertical": true,
+       "hide_state": true,
+       "grid_options": {
+        "columns": 3,
+        "rows": 2
+       },
+       "icon": "mdi:book-open-variant",
+       "color": "amber"
+      },
+      {
+       "type": "tile",
+       "entity": "scene.eettafel_overdag",
+       "name": "Overdag",
+       "vertical": true,
+       "hide_state": true,
+       "grid_options": {
+        "columns": 3,
+        "rows": 2
+       },
+       "icon": "mdi:weather-sunny",
+       "color": "orange"
+      },
+      {
+       "type": "tile",
+       "entity": "scene.eettafel_nachtlampje",
+       "name": "Nacht",
+       "vertical": true,
+       "hide_state": true,
+       "grid_options": {
+        "columns": 3,
+        "rows": 2
+       },
+       "icon": "mdi:lightbulb-night",
+       "color": "indigo"
+      }
+     ]
+    },
+    {
+     "type": "grid",
+     "cards": [
+      {
+       "type": "heading",
+       "heading": "Keuken",
+       "heading_style": "title",
+       "icon": "mdi:countertop"
+      },
+      {
+       "type": "tile",
+       "entity": "light.keuken",
+       "name": "Licht",
+       "features_position": "bottom",
+       "features": [
+        {
+         "type": "light-brightness"
+        },
+        {
+         "type": "light-color-temp"
+        }
+       ]
+      },
+      {
+       "type": "tile",
+       "entity": "switch.koffie",
+       "name": "Koffiezetapparaat",
+       "icon": "mdi:coffee-maker"
+      },
+      {
+       "type": "tile",
+       "entity": "scene.keuken_ontspannen",
+       "name": "Ontspannen",
+       "vertical": true,
+       "hide_state": true,
+       "grid_options": {
+        "columns": 6,
+        "rows": 2
+       },
+       "icon": "mdi:weather-night",
+       "color": "purple"
+      },
+      {
+       "type": "tile",
+       "entity": "scene.keuken_rusten",
+       "name": "Rusten",
+       "vertical": true,
+       "hide_state": true,
+       "grid_options": {
+        "columns": 6,
+        "rows": 2
+       },
+       "icon": "mdi:sleep",
+       "color": "indigo"
+      }
+     ]
+    },
+    {
+     "type": "grid",
+     "cards": [
+      {
+       "type": "heading",
+       "heading": "Oven",
+       "heading_style": "title",
+       "icon": "mdi:stove"
+      },
+      {
+       "type": "tile",
+       "entity": "sensor.oven_current_oven_cavity_temperature",
+       "name": "Temperatuur",
+       "icon": "mdi:thermometer",
+       "grid_options": {
+        "columns": 6
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "sensor.oven_operation_state",
+       "name": "Status",
+       "grid_options": {
+        "columns": 6
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "sensor.oven_program_progress",
+       "name": "Voortgang",
+       "visibility": [
+        {
+         "condition": "state",
+         "entity": "sensor.oven_operation_state",
+         "state": [
+          "run",
+          "pause",
+          "delayedstart"
+         ]
+        }
+       ],
+       "grid_options": {
+        "columns": 6
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "sensor.oven_program_finish_time",
+       "name": "Klaar om",
+       "visibility": [
+        {
+         "condition": "state",
+         "entity": "sensor.oven_operation_state",
+         "state": [
+          "run",
+          "pause",
+          "delayedstart"
+         ]
+        }
+       ],
+       "grid_options": {
+        "columns": 6
+       }
+      },
+      {
+       "type": "picture",
+       "image": "data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20240%20120%22%3E%3Ctext%20x%3D%22120%22%20y%3D%2268%22%20font-size%3D%2264%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%3E%F0%9F%A5%90%3C/text%3E%3Ctext%20x%3D%22120%22%20y%3D%22112%22%20font-size%3D%2218%22%20text-anchor%3D%22middle%22%20fill%3D%22%238a8a8a%22%20font-family%3D%22-apple-system%2CRoboto%2Csans-serif%22%3ECroissant%3C/text%3E%3C/svg%3E",
+       "alt_text": "Croissantmodus",
+       "tap_action": {
+        "action": "perform-action",
+        "perform_action": "script.croissantmodus",
+        "confirmation": {
+         "text": "Oven aanzetten op 200 °C hetelucht met snel voorverwarmen, 70 minuten?"
+        }
+       },
+       "hold_action": {
+        "action": "more-info",
+        "entity": "script.croissantmodus"
+       },
+       "grid_options": {
+        "columns": 6,
+        "rows": 2
+       }
+      },
+      {
+       "type": "button",
+       "entity": "script.oven_uit",
+       "name": "Oven uit",
+       "icon": "mdi:power",
+       "show_state": false,
+       "tap_action": {
+        "action": "perform-action",
+        "perform_action": "script.oven_uit"
+       },
+       "hold_action": {
+        "action": "more-info"
+       },
+       "grid_options": {
+        "columns": 6,
+        "rows": 2
+       }
+      }
+     ]
+    },
+    {
+     "type": "grid",
+     "cards": [
+      {
+       "type": "heading",
+       "heading": "Kantoor",
+       "heading_style": "title",
+       "icon": "mdi:desk"
+      },
+      {
+       "type": "tile",
+       "entity": "light.kantoor",
+       "name": "Kantoor",
+       "features_position": "bottom",
+       "features": [
+        {
+         "type": "light-brightness"
+        },
+        {
+         "type": "light-color-temp"
+        }
+       ]
+      },
+      {
+       "type": "tile",
+       "entity": "light.kantoor_2_2",
+       "name": "Kantoor 2",
+       "features_position": "bottom",
+       "features": [
+        {
+         "type": "light-brightness"
+        }
+       ]
+      },
+      {
+       "type": "tile",
+       "entity": "light.awox_eglo_zm_tw",
+       "name": "AwoX lamp",
+       "features_position": "bottom",
+       "features": [
+        {
+         "type": "light-brightness"
+        }
+       ]
+      },
+      {
+       "type": "tile",
+       "entity": "scene.kantoor_concentreren",
+       "name": "Concentreren",
+       "vertical": true,
+       "hide_state": true,
+       "grid_options": {
+        "columns": 4,
+        "rows": 2
+       },
+       "icon": "mdi:head-cog",
+       "color": "cyan"
+      },
+      {
+       "type": "tile",
+       "entity": "scene.kantoor_energie",
+       "name": "Energie",
+       "vertical": true,
+       "hide_state": true,
+       "grid_options": {
+        "columns": 4,
+        "rows": 2
+       },
+       "icon": "mdi:lightning-bolt",
+       "color": "yellow"
+      },
+      {
+       "type": "tile",
+       "entity": "scene.kantoor_ontspannen",
+       "name": "Ontspannen",
+       "vertical": true,
+       "hide_state": true,
+       "grid_options": {
+        "columns": 4,
+        "rows": 2
+       },
+       "icon": "mdi:weather-night",
+       "color": "purple"
+      },
+      {
+       "type": "tile",
+       "entity": "automation.toggle_lichten_kantoor_2",
+       "name": "Automatisering kantoor",
+       "icon": "mdi:robot"
+      }
+     ]
+    },
+    {
+     "type": "grid",
+     "cards": [
+      {
+       "type": "heading",
+       "heading": "Slaapkamer",
+       "heading_style": "title",
+       "icon": "mdi:bed"
+      },
+      {
+       "type": "tile",
+       "entity": "light.wiz_rgbw_tunable_ab2100",
+       "name": "WiZ lamp 1",
+       "features": [
+        {
+         "type": "light-brightness"
+        },
+        {
+         "type": "light-color-temp"
+        }
+       ],
+       "grid_options": {
+        "columns": 6
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "light.wiz_rgbw_tunable_ab26c2",
+       "name": "WiZ lamp 2",
+       "features": [
+        {
+         "type": "light-brightness"
+        },
+        {
+         "type": "light-color-temp"
+        }
+       ],
+       "grid_options": {
+        "columns": 6
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "light.slaapkamer",
+       "name": "Kastverlichting (alles)",
+       "features": [
+        {
+         "type": "light-brightness"
+        }
+       ],
+       "grid_options": {
+        "columns": 12
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "light.ikea_of_sweden_tradfri_driver_10w",
+       "name": "Kast 1",
+       "grid_options": {
+        "columns": 6
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "light.ikea_of_sweden_tradfri_driver_10w_2",
+       "name": "Kast 2",
+       "grid_options": {
+        "columns": 6
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "Energie",
+   "path": "energie",
+   "icon": "mdi:lightning-bolt",
+   "type": "sections",
+   "max_columns": 2,
+   "dense_section_placement": true,
+   "badges": [
+    {
+     "type": "entity",
+     "entity": "sensor.zonneplan_current_usage",
+     "color": "yellow"
+    },
+    {
+     "type": "entity",
+     "entity": "sensor.zonneplan_current_electricity_tariff"
+    },
+    {
+     "type": "entity",
+     "entity": "sensor.zonneplan_sustainability_score",
+     "color": "green"
+    }
+   ],
+   "sections": [
+    {
+     "type": "grid",
+     "cards": [
+      {
+       "type": "heading",
+       "heading": "Nu",
+       "heading_style": "title",
+       "icon": "mdi:flash"
+      },
+      {
+       "type": "gauge",
+       "entity": "sensor.zonneplan_current_usage",
+       "name": "Verbruik nu",
+       "min": 0,
+       "max": 5000,
+       "needle": true,
+       "severity": {
+        "green": 0,
+        "yellow": 1500,
+        "red": 3000
+       },
+       "grid_options": {
+        "columns": 6
+       }
+      },
+      {
+       "type": "gauge",
+       "entity": "sensor.power_production_now",
+       "name": "Opwek nu",
+       "min": 0,
+       "max": 3000,
+       "needle": true,
+       "grid_options": {
+        "columns": 6
+       }
+      },
+      {
+       "type": "history-graph",
+       "title": "Vermogen laatste 24 uur",
+       "hours_to_show": 24,
+       "entities": [
+        {
+         "entity": "sensor.zonneplan_current_usage",
+         "name": "Verbruik"
+        },
+        {
+         "entity": "sensor.power_production_now",
+         "name": "Opwek"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "type": "grid",
+     "cards": [
+      {
+       "type": "heading",
+       "heading": "Vandaag",
+       "heading_style": "title",
+       "icon": "mdi:calendar"
+      },
+      {
+       "type": "tile",
+       "entity": "sensor.zonneplan_electricity_consumption_today",
+       "name": "Stroom verbruikt",
+       "grid_options": {
+        "columns": 6
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "sensor.zonneplan_electricity_returned_today",
+       "name": "Stroom teruggeleverd",
+       "grid_options": {
+        "columns": 6
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "sensor.zonneplan_gas_consumption_today",
+       "name": "Gas",
+       "grid_options": {
+        "columns": 6
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "sensor.energy_production_today",
+       "name": "Zon verwacht",
+       "grid_options": {
+        "columns": 6
+       }
+      }
+     ]
+    },
+    {
+     "type": "grid",
+     "cards": [
+      {
+       "type": "heading",
+       "heading": "Tarieven & tip",
+       "heading_style": "title",
+       "icon": "mdi:currency-eur"
+      },
+      {
+       "type": "tile",
+       "entity": "sensor.zonneplan_current_electricity_tariff",
+       "name": "Stroomprijs",
+       "grid_options": {
+        "columns": 6
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "sensor.zonneplan_current_gas_tariff",
+       "name": "Gasprijs",
+       "grid_options": {
+        "columns": 6
+       }
+      },
+      {
+       "type": "markdown",
+       "content": "**Tip van Zonneplan**\n{{ states('sensor.zonneplan_status_tip') }}\n"
+      }
+     ]
+    },
+    {
+     "type": "grid",
+     "cards": [
+      {
+       "type": "heading",
+       "heading": "Meterkast",
+       "heading_style": "title",
+       "icon": "mdi:counter"
+      },
+      {
+       "type": "tile",
+       "entity": "sensor.connect_energiemeter_electricity_consumption",
+       "name": "Afname",
+       "grid_options": {
+        "columns": 6
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "sensor.connect_energiemeter_electricity_production",
+       "name": "Teruglevering",
+       "grid_options": {
+        "columns": 6
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "sensor.connect_energiemeter_electricity_average",
+       "name": "Gemiddeld",
+       "grid_options": {
+        "columns": 6
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "Warmtepomp",
+   "path": "warmtepomp",
+   "icon": "mdi:heat-pump",
+   "type": "sections",
+   "max_columns": 2,
+   "dense_section_placement": true,
+   "badges": [
+    {
+     "type": "entity",
+     "entity": "sensor.luxtronik_290716_0122_dhw_temperature",
+     "name": "Boiler",
+     "color": "red"
+    },
+    {
+     "type": "entity",
+     "entity": "sensor.zonneplan_current_electricity_tariff",
+     "name": "Stroomprijs"
+    },
+    {
+     "type": "entity",
+     "entity": "sensor.luxtronik_290716_0122_status",
+     "name": "Status"
+    }
+   ],
+   "sections": [
+    {
+     "type": "grid",
+     "cards": [
+      {
+       "type": "heading",
+       "heading": "Nu",
+       "heading_style": "title",
+       "icon": "mdi:heat-pump"
+      },
+      {
+       "type": "tile",
+       "entity": "sensor.luxtronik_290716_0122_status",
+       "name": "Wat doet-ie",
+       "grid_options": {
+        "columns": 12
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "binary_sensor.luxtronik_290716_0122_compressor",
+       "name": "Compressor",
+       "grid_options": {
+        "columns": 6
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "binary_sensor.luxtronik_290716_0122_evu_unlocked",
+       "name": "Vrijgegeven",
+       "grid_options": {
+        "columns": 6
+       }
+      },
+      {
+       "type": "history-graph",
+       "title": "Status laatste 24 uur",
+       "hours_to_show": 24,
+       "entities": [
+        {
+         "entity": "sensor.luxtronik_290716_0122_status",
+         "name": "Status"
+        },
+        {
+         "entity": "binary_sensor.luxtronik_290716_0122_compressor",
+         "name": "Compressor"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "type": "grid",
+     "cards": [
+      {
+       "type": "heading",
+       "heading": "Warm water",
+       "heading_style": "title",
+       "icon": "mdi:water-boiler"
+      },
+      {
+       "type": "gauge",
+       "entity": "sensor.luxtronik_290716_0122_dhw_temperature",
+       "name": "Boilertemperatuur",
+       "min": 20,
+       "max": 65,
+       "needle": true,
+       "severity": {
+        "red": 20,
+        "yellow": 40,
+        "green": 48
+       },
+       "grid_options": {
+        "columns": 6
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "number.luxtronik_290716_0122_dhw_target_temperature",
+       "name": "Ingesteld doel",
+       "grid_options": {
+        "columns": 6
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "binary_sensor.luxtronik_290716_0122_dhw_charging_pump",
+       "name": "Boiler laadt",
+       "grid_options": {
+        "columns": 6
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "select.luxtronik_290716_0122_thermal_desinfection_day",
+       "name": "Legionella-dag",
+       "grid_options": {
+        "columns": 6
+       }
+      },
+      {
+       "type": "markdown",
+       "content": "**Schema (uit alpha home app):** 50 °C overdag, 40 °C 's nachts\n\nTijden per dag (ma–vr): {{ states('text.luxtronik_290716_0122_timer_dhw_schedule_week').split('/')[0] }}\n\n_Elke zondag verwarmt de boiler eenmalig naar 62 °C tegen legionella._"
+      },
+      {
+       "type": "history-graph",
+       "title": "Boilertemperatuur laatste 2 dagen",
+       "hours_to_show": 48,
+       "entities": [
+        {
+         "entity": "sensor.luxtronik_290716_0122_dhw_temperature",
+         "name": "Boiler"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "type": "grid",
+     "cards": [
+      {
+       "type": "heading",
+       "heading": "Kamers",
+       "heading_style": "title",
+       "icon": "mdi:home-thermometer"
+      },
+      {
+       "type": "tile",
+       "entity": "sensor.kamer_woonkamer_temperatuur",
+       "name": "Woonkamer",
+       "icon": "mdi:thermometer",
+       "grid_options": {
+        "columns": 6
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "sensor.kamer_woonkamer_doeltemperatuur",
+       "name": "Woonkamer doel",
+       "icon": "mdi:thermostat",
+       "grid_options": {
+        "columns": 6
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "sensor.kamer_master_temperatuur",
+       "name": "Master",
+       "icon": "mdi:thermometer",
+       "grid_options": {
+        "columns": 6
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "sensor.kamer_master_doeltemperatuur",
+       "name": "Master doel",
+       "icon": "mdi:thermostat",
+       "grid_options": {
+        "columns": 6
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "sensor.kamer_flo_temperatuur",
+       "name": "Flo",
+       "icon": "mdi:thermometer",
+       "grid_options": {
+        "columns": 6
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "sensor.kamer_flo_doeltemperatuur",
+       "name": "Flo doel",
+       "icon": "mdi:thermostat",
+       "grid_options": {
+        "columns": 6
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "sensor.kamer_lauren_temperatuur",
+       "name": "Lauren",
+       "icon": "mdi:thermometer",
+       "grid_options": {
+        "columns": 6
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "sensor.kamer_lauren_doeltemperatuur",
+       "name": "Lauren doel",
+       "icon": "mdi:thermostat",
+       "grid_options": {
+        "columns": 6
+       }
+      },
+      {
+       "type": "conditional",
+       "conditions": [
+        {
+         "condition": "or",
+         "conditions": [
+          {
+           "condition": "state",
+           "entity": "sensor.kamer_woonkamer_status",
+           "state_not": "ok"
+          },
+          {
+           "condition": "state",
+           "entity": "sensor.kamer_master_status",
+           "state_not": "ok"
+          },
+          {
+           "condition": "state",
+           "entity": "sensor.kamer_flo_status",
+           "state_not": "ok"
+          },
+          {
+           "condition": "state",
+           "entity": "sensor.kamer_lauren_status",
+           "state_not": "ok"
+          }
+         ]
+        }
+       ],
+       "card": {
+        "type": "markdown",
+        "content": "**⚠️ Vloerverwarming storing** in: {% set ns = namespace(r=[]) %}{% if states('sensor.kamer_woonkamer_status') != 'ok' %}{% set ns.r = ns.r + ['Woonkamer'] %}{% endif %}{% if states('sensor.kamer_master_status') != 'ok' %}{% set ns.r = ns.r + ['Master'] %}{% endif %}{% if states('sensor.kamer_flo_status') != 'ok' %}{% set ns.r = ns.r + ['Flo'] %}{% endif %}{% if states('sensor.kamer_lauren_status') != 'ok' %}{% set ns.r = ns.r + ['Lauren'] %}{% endif %}{{ ns.r | join(', ') }}\n\nDe ruimtesensoren werken wel, maar de schakelmodule van deze kamers ontbreekt in de heatapp-gateway. Controleer stroom/lampjes van de module boven, of opnieuw koppelen via gateway → Radio Components."
+       }
+      },
+      {
+       "type": "history-graph",
+       "title": "Kamertemperatuur laatste 2 dagen",
+       "hours_to_show": 48,
+       "entities": [
+        {
+         "entity": "sensor.kamer_woonkamer_temperatuur",
+         "name": "Woonkamer"
+        },
+        {
+         "entity": "sensor.kamer_master_temperatuur",
+         "name": "Master"
+        },
+        {
+         "entity": "sensor.kamer_flo_temperatuur",
+         "name": "Flo"
+        },
+        {
+         "entity": "sensor.kamer_lauren_temperatuur",
+         "name": "Lauren"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "type": "grid",
+     "cards": [
+      {
+       "type": "heading",
+       "heading": "Energie & kosten",
+       "heading_style": "title",
+       "icon": "mdi:currency-eur"
+      },
+      {
+       "type": "statistics-graph",
+       "title": "Stroomprijs per uur (14 dagen)",
+       "period": "hour",
+       "days_to_show": 14,
+       "stat_types": [
+        "mean"
+       ],
+       "chart_type": "line",
+       "entities": [
+        {
+         "entity": "sensor.zonneplan_current_electricity_tariff",
+         "name": "€/kWh"
+        }
+       ]
+      },
+      {
+       "type": "statistics-graph",
+       "title": "Gem. stroomprijs per dag (30 dagen)",
+       "period": "day",
+       "days_to_show": 30,
+       "stat_types": [
+        "mean"
+       ],
+       "chart_type": "bar",
+       "entities": [
+        {
+         "entity": "sensor.zonneplan_current_electricity_tariff",
+         "name": "€/kWh"
+        }
+       ]
+      },
+      {
+       "type": "statistics-graph",
+       "title": "Warmte per dag (kWh)",
+       "period": "day",
+       "days_to_show": 30,
+       "stat_types": [
+        "change"
+       ],
+       "chart_type": "bar",
+       "entities": [
+        {
+         "entity": "sensor.luxtronik_290716_0122_heat_amount_heating",
+         "name": "Verwarming"
+        },
+        {
+         "entity": "sensor.luxtronik_290716_0122_dhw_heat_amount",
+         "name": "Warm water"
+        }
+       ]
+      },
+      {
+       "type": "markdown",
+       "content": "### Kostenindicatie\nGeen eigen stroommeter, dus een **schatting** op basis van geleverde warmte en rendement COP ≈ 3,2.\n\n| | Warmte (kWh) | Stroomkosten* |\n|---|---:|---:|\n| Verwarming | 2.450 | ± € 200 |\n| Warm water | 2.150 | ± € 190 |\n| **Totaal** | **4.600** | **± € 390** |\n\n\\*2026 tot nu toe → ongeveer **€ 510 per jaar**.\n\n**Prijs die de pomp echt betaalde:** gemiddeld {{ 0.271 }} €/kWh, iets boven het daggemiddelde van 0,264 — door het oude schema dat 's ochtends en 's avonds (duur) verwarmde.\n\n**Middag-schema loont:** warm water maken om 11–14 u kost ~0,19 €/kWh i.p.v. ~0,29 €/kWh om 05–07 u. Dat scheelt zo'n **€ 80 per jaar**.\n\nGoedkoopste uren: 12–15 u · Duurste uren: 19–22 u.\n\nStroomprijs nu: **{{ states('sensor.zonneplan_current_electricity_tariff') }} €/kWh** → warmte ≈ **{{ (states('sensor.zonneplan_current_electricity_tariff')|float(0)/3.2)|round(3) }} €/kWh** bij COP 3,2."
+      }
+     ]
+    },
+    {
+     "type": "grid",
+     "cards": [
+      {
+       "type": "heading",
+       "heading": "Tellers & onderhoud",
+       "heading_style": "title",
+       "icon": "mdi:counter"
+      },
+      {
+       "type": "tile",
+       "entity": "sensor.luxtronik_290716_0122_operation_hours",
+       "name": "Draaiuren totaal",
+       "grid_options": {
+        "columns": 6
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "sensor.luxtronik_290716_0122_dhw_operation_hours",
+       "name": "Draaiuren warm water",
+       "grid_options": {
+        "columns": 6
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "sensor.luxtronik_290716_0122_heat_amount_heating",
+       "name": "Warmte verwarming",
+       "grid_options": {
+        "columns": 6
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "sensor.luxtronik_290716_0122_dhw_heat_amount",
+       "name": "Warmte warm water",
+       "grid_options": {
+        "columns": 6
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "number.luxtronik_290716_0122_dhw_thermal_desinfection_target",
+       "name": "Legionella-temperatuur",
+       "grid_options": {
+        "columns": 6
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "sensor.luxtronik_290716_0122_compressor1_impulses",
+       "name": "Compressor starts",
+       "grid_options": {
+        "columns": 6
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "Wassen",
+   "path": "wassen",
+   "icon": "mdi:washing-machine",
+   "type": "sections",
+   "max_columns": 2,
+   "badges": [
+    {
+     "type": "entity",
+     "entity": "sensor.wasmachine_job_state",
+     "name": "Was",
+     "show_name": true,
+     "icon": "mdi:washing-machine",
+     "color": "blue",
+     "visibility": [
+      {
+       "condition": "state",
+       "entity": "sensor.wasmachine_machine_state",
+       "state": "run"
+      }
+     ]
+    },
+    {
+     "type": "entity",
+     "entity": "sensor.droger_job_state",
+     "name": "Droger",
+     "show_name": true,
+     "icon": "mdi:tumble-dryer",
+     "color": "orange",
+     "visibility": [
+      {
+       "condition": "state",
+       "entity": "sensor.droger_machine_state",
+       "state": "run"
+      }
+     ]
+    }
+   ],
+   "sections": [
+    {
+     "type": "grid",
+     "cards": [
+      {
+       "type": "heading",
+       "heading": "Wasmachine",
+       "heading_style": "title",
+       "icon": "mdi:washing-machine"
+      },
+      {
+       "type": "tile",
+       "entity": "sensor.wasmachine_machine_state",
+       "name": "Status",
+       "icon": "mdi:washing-machine"
+      },
+      {
+       "type": "tile",
+       "entity": "sensor.wasmachine_job_state",
+       "name": "Fase",
+       "icon": "mdi:progress-clock"
+      },
+      {
+       "type": "tile",
+       "entity": "sensor.wasmachine_completion_time",
+       "name": "Klaar om",
+       "icon": "mdi:clock-end",
+       "visibility": [
+        {
+         "condition": "state",
+         "entity": "sensor.wasmachine_machine_state",
+         "state": "run"
+        }
+       ]
+      },
+      {
+       "type": "tile",
+       "entity": "sensor.wasmachine_power",
+       "name": "Vermogen",
+       "icon": "mdi:flash"
+      }
+     ]
+    },
+    {
+     "type": "grid",
+     "cards": [
+      {
+       "type": "heading",
+       "heading": "Droger",
+       "heading_style": "title",
+       "icon": "mdi:tumble-dryer"
+      },
+      {
+       "type": "tile",
+       "entity": "sensor.droger_machine_state",
+       "name": "Status",
+       "icon": "mdi:tumble-dryer"
+      },
+      {
+       "type": "tile",
+       "entity": "sensor.droger_job_state",
+       "name": "Fase",
+       "icon": "mdi:progress-clock"
+      },
+      {
+       "type": "tile",
+       "entity": "sensor.droger_completion_time",
+       "name": "Klaar om",
+       "icon": "mdi:clock-end",
+       "visibility": [
+        {
+         "condition": "state",
+         "entity": "sensor.droger_machine_state",
+         "state": "run"
+        }
+       ]
+      },
+      {
+       "type": "tile",
+       "entity": "sensor.droger_power",
+       "name": "Vermogen",
+       "icon": "mdi:flash"
+      }
+     ]
+    },
+    {
+     "type": "grid",
+     "cards": [
+      {
+       "type": "heading",
+       "heading": "Melding als het klaar is",
+       "heading_style": "title",
+       "icon": "mdi:bell-ring"
+      },
+      {
+       "type": "markdown",
+       "content": "Zet je schakelaar aan om een pushmelding te krijgen zodra de wasmachine of droger klaar is.",
+       "grid_options": {
+        "columns": 12
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "input_boolean.wasmachine_melding_maarten",
+       "name": "Was – Maarten"
+      },
+      {
+       "type": "tile",
+       "entity": "input_boolean.wasmachine_melding_tessa",
+       "name": "Was – Tessa"
+      },
+      {
+       "type": "tile",
+       "entity": "input_boolean.droger_melding_maarten",
+       "name": "Droger – Maarten"
+      },
+      {
+       "type": "tile",
+       "entity": "input_boolean.droger_melding_tessa",
+       "name": "Droger – Tessa"
+      }
+     ]
+    },
+    {
+     "type": "grid",
+     "cards": [
+      {
+       "type": "heading",
+       "heading": "Verbruik",
+       "heading_style": "title",
+       "icon": "mdi:chart-bar"
+      },
+      {
+       "type": "history-graph",
+       "title": "Vermogen (24 u)",
+       "hours_to_show": 24,
+       "grid_options": {
+        "columns": 12
+       },
+       "entities": [
+        {
+         "entity": "sensor.wasmachine_power",
+         "name": "Wasmachine"
+        },
+        {
+         "entity": "sensor.droger_power",
+         "name": "Droger"
+        }
+       ]
+      },
+      {
+       "type": "statistics-graph",
+       "title": "kWh per dag (30 d)",
+       "chart_type": "bar",
+       "period": "day",
+       "days_to_show": 30,
+       "stat_types": [
+        "change"
+       ],
+       "grid_options": {
+        "columns": 12
+       },
+       "entities": [
+        {
+         "entity": "sensor.wasmachine_energy",
+         "name": "Wasmachine"
+        },
+        {
+         "entity": "sensor.droger_energy",
+         "name": "Droger"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "Automatiseringen",
+   "path": "automatiseringen",
+   "icon": "mdi:robot-happy",
+   "type": "sections",
+   "max_columns": 2,
+   "dense_section_placement": true,
+   "sections": [
+    {
+     "type": "grid",
+     "cards": [
+      {
+       "type": "heading",
+       "heading": "Koffiemachine",
+       "heading_style": "title",
+       "icon": "mdi:coffee"
+      },
+      {
+       "type": "tile",
+       "entity": "switch.koffie",
+       "name": "Koffiemachine",
+       "features": [
+        {
+         "type": "toggle"
+        }
+       ],
+       "grid_options": {
+        "columns": 6
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "sensor.shellyplusplugs_fcb4670d5404_power",
+       "name": "Verbruik nu",
+       "grid_options": {
+        "columns": 6
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "timer.koffie_auto_uit",
+       "name": "Waarschuwing over",
+       "grid_options": {
+        "columns": 12
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "automation.koffie_automatisch_uit_na_60_minuten",
+       "name": "Uit na 60 minuten",
+       "state_content": [
+        "state",
+        "last_triggered"
+       ],
+       "grid_options": {
+        "columns": 12
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "automation.koffie_uit_om_22_00",
+       "name": "Uit om 22:00",
+       "state_content": [
+        "state",
+        "last_triggered"
+       ],
+       "grid_options": {
+        "columns": 12
+       }
+      },
+      {
+       "type": "markdown",
+       "content": "Gaat uit na **60 minuten zonder gebruik**. Koffie zetten of melk opschuimen (lang hoog verbruik) start de klok opnieuw.\n\nNa 55 minuten krijg je een melding met **Nog een uur aan**. Na het uitzetten kun je hem met **Weer aanzetten** direct aanzetten. Om 22:00 gaat hij sowieso uit.\n\nVerwachte besparing: **ca. €65 per jaar**."
+      }
+     ]
+    },
+    {
+     "type": "grid",
+     "cards": [
+      {
+       "type": "heading",
+       "heading": "Effect",
+       "heading_style": "title",
+       "icon": "mdi:chart-bar"
+      },
+      {
+       "type": "statistics-graph",
+       "title": "Koffiemachine per dag (kWh)",
+       "entities": [
+        {
+         "entity": "sensor.shellyplusplugs_fcb4670d5404_energy",
+         "name": "Koffie"
+        }
+       ],
+       "stat_types": [
+        "change"
+       ],
+       "chart_type": "bar",
+       "period": "day",
+       "days_to_show": 30,
+       "hide_legend": true,
+       "grid_options": {
+        "columns": 12
+       }
+      },
+      {
+       "type": "statistics-graph",
+       "title": "Wassen & drogen per dag (kWh)",
+       "entities": [
+        {
+         "entity": "sensor.wasmachine_energy",
+         "name": "Wasmachine"
+        },
+        {
+         "entity": "sensor.droger_energy",
+         "name": "Droger"
+        }
+       ],
+       "stat_types": [
+        "change"
+       ],
+       "chart_type": "bar",
+       "period": "day",
+       "days_to_show": 30,
+       "grid_options": {
+        "columns": 12
+       }
+      }
+     ]
+    },
+    {
+     "type": "grid",
+     "cards": [
+      {
+       "type": "heading",
+       "heading": "Alle automatiseringen",
+       "heading_style": "title",
+       "icon": "mdi:robot"
+      },
+      {
+       "type": "tile",
+       "entity": "automation.koffie_automatisch_uit_na_60_minuten",
+       "name": "Koffie: uit na 60 minuten",
+       "state_content": [
+        "state",
+        "last_triggered"
+       ],
+       "grid_options": {
+        "columns": 12
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "automation.koffie_uit_om_22_00",
+       "name": "Koffie: uit om 22:00",
+       "state_content": [
+        "state",
+        "last_triggered"
+       ],
+       "grid_options": {
+        "columns": 12
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "automation.robb_smarrt_8_button_switch_keuken",
+       "name": "8-knops schakelaar keuken",
+       "state_content": [
+        "state",
+        "last_triggered"
+       ],
+       "grid_options": {
+        "columns": 12
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "automation.toggle_lichten_kantoor_2",
+       "name": "Lichten kantoor",
+       "state_content": [
+        "state",
+        "last_triggered"
+       ],
+       "grid_options": {
+        "columns": 12
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "Huis",
+   "path": "huis",
+   "icon": "mdi:home-search",
+   "type": "sections",
+   "max_columns": 2,
+   "dense_section_placement": true,
+   "sections": [
+    {
+     "type": "grid",
+     "cards": [
+      {
+       "type": "heading",
+       "heading": "Wassen & drogen",
+       "heading_style": "title",
+       "icon": "mdi:washing-machine"
+      },
+      {
+       "type": "tile",
+       "entity": "sensor.wasmachine_machine_state",
+       "name": "Wasmachine",
+       "icon": "mdi:washing-machine"
+      },
+      {
+       "type": "tile",
+       "entity": "sensor.wasmachine_job_state",
+       "name": "Wasprogramma",
+       "grid_options": {
+        "columns": 6
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "sensor.wasmachine_power",
+       "name": "Wasmachine vermogen",
+       "grid_options": {
+        "columns": 6
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "sensor.droger_machine_state",
+       "name": "Droger",
+       "icon": "mdi:tumble-dryer"
+      },
+      {
+       "type": "tile",
+       "entity": "sensor.droger_job_state",
+       "name": "Droogprogramma",
+       "grid_options": {
+        "columns": 6
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "switch.droger_wrinkle_prevent",
+       "name": "Kreukbeveiliging",
+       "grid_options": {
+        "columns": 6
+       }
+      }
+     ]
+    },
+    {
+     "type": "grid",
+     "cards": [
+      {
+       "type": "heading",
+       "heading": "Oven",
+       "heading_style": "title",
+       "icon": "mdi:stove"
+      },
+      {
+       "type": "tile",
+       "entity": "switch.oven_power",
+       "name": "Oven",
+       "icon": "mdi:stove"
+      },
+      {
+       "type": "tile",
+       "entity": "sensor.oven_operation_state",
+       "name": "Status",
+       "grid_options": {
+        "columns": 6
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "sensor.oven_current_oven_cavity_temperature",
+       "name": "Temperatuur",
+       "grid_options": {
+        "columns": 6
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "sensor.oven_door",
+       "name": "Deur",
+       "icon": "mdi:door",
+       "grid_options": {
+        "columns": 6
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "switch.oven_child_lock",
+       "name": "Kinderslot",
+       "grid_options": {
+        "columns": 6
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "button.oven_stop_program",
+       "name": "Stop programma",
+       "visibility": [
+        {
+         "condition": "state",
+         "entity": "sensor.oven_operation_state",
+         "state_not": "inactive"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "type": "grid",
+     "cards": [
+      {
+       "type": "heading",
+       "heading": "Afval",
+       "heading_style": "title",
+       "icon": "mdi:trash-can"
+      },
+      {
+       "type": "tile",
+       "entity": "sensor.afvalstoffendienstkalender_vandaag",
+       "name": "Vandaag",
+       "grid_options": {
+        "columns": 6
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "sensor.afvalstoffendienstkalender_morgen",
+       "name": "Morgen",
+       "grid_options": {
+        "columns": 6
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "sensor.afvalstoffendienstkalender_restafval",
+       "name": "Restafval",
+       "grid_options": {
+        "columns": 6
+       },
+       "icon": "mdi:trash-can",
+       "color": "grey"
+      },
+      {
+       "type": "tile",
+       "entity": "sensor.afvalstoffendienstkalender_gft",
+       "name": "GFT",
+       "grid_options": {
+        "columns": 6
+       },
+       "icon": "mdi:leaf",
+       "color": "green"
+      },
+      {
+       "type": "tile",
+       "entity": "sensor.afvalstoffendienstkalender_papier",
+       "name": "Papier",
+       "grid_options": {
+        "columns": 6
+       },
+       "icon": "mdi:newspaper-variant-multiple",
+       "color": "blue"
+      },
+      {
+       "type": "tile",
+       "entity": "sensor.afvalstoffendienstkalender_pmd",
+       "name": "PMD",
+       "grid_options": {
+        "columns": 6
+       },
+       "icon": "mdi:recycle",
+       "color": "yellow"
+      }
+     ]
+    },
+    {
+     "type": "grid",
+     "cards": [
+      {
+       "type": "heading",
+       "heading": "Batterijen",
+       "heading_style": "title",
+       "icon": "mdi:battery-70"
+      },
+      {
+       "type": "tile",
+       "entity": "sensor.iphone_van_maarten_battery_level",
+       "name": "iPhone Maarten",
+       "grid_options": {
+        "columns": 6
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "sensor.iphone_14_tessa_battery_level",
+       "name": "iPhone Tessa",
+       "grid_options": {
+        "columns": 6
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "sensor.maartens_ipad_battery_level",
+       "name": "iPad",
+       "grid_options": {
+        "columns": 6
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "sensor.tandenborstel_maarten_battery",
+       "name": "Tandenborstel",
+       "grid_options": {
+        "columns": 6
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "sensor.hue_dimmer_switch_2_battery",
+       "name": "Hue dimmer 2",
+       "grid_options": {
+        "columns": 6
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "sensor.hue_dimmer_switch_3_battery",
+       "name": "Hue dimmer 3",
+       "grid_options": {
+        "columns": 6
+       }
+      }
+     ]
+    },
+    {
+     "type": "grid",
+     "cards": [
+      {
+       "type": "heading",
+       "heading": "Wie is thuis",
+       "heading_style": "title",
+       "icon": "mdi:account-group"
+      },
+      {
+       "type": "tile",
+       "entity": "person.maarten_betman",
+       "name": "Maarten",
+       "grid_options": {
+        "columns": 6
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "person.tessa",
+       "name": "Tessa",
+       "grid_options": {
+        "columns": 6
+       }
+      },
+      {
+       "type": "map",
+       "entities": [
+        "person.maarten_betman",
+        "person.tessa"
+       ],
+       "theme_mode": "auto",
+       "hours_to_show": 6
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

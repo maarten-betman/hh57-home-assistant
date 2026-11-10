@@ -91,6 +91,19 @@ HA at `http://homeassistant:8123` (LAN). Dutch entity names. Tariff: Zonneplan d
     as `event.works_with_hue_switch_1_button_1..4`.
 - All downstairs + office Hue bulbs are **color_temp only** (tunable white, no RGB).
 
+## Ventilation (Zehnder ComfoFan S, ESPHome RF bridge)
+
+ESP32 + nRF905 running ESPHome 2026.10.2 (`esphome/zehnder-ventilatie.yaml`). On Wi-Fi as
+`zehnder-ventilatie` / 192.168.2.45 (MAC `B0:3F:D3:51:E4:30`), native API port 6053 with encryption.
+HA device **Ventilatie** (config entry `01M73N5DP364E1SXBJZNAN8BAN`, device `f3dbd0c9bc5cb68fd4254668742a001b`).
+
+| Entity | What |
+|---|---|
+| `fan.ventilatie_ventilatie` | The ComfoFan. 25/50/75/100 % = speed 1–4 (fan voltage 30/50/90 %/max). Polled every 60 s; also reflects changes made with the wall remote. Paired 2026-11-10: network `0x206C9815`, main unit ID 0x59, bridge ID 0x0A. |
+| `sensor.ventilatie_wifi_signaal` | Bridge Wi-Fi RSSI (dBm) |
+| `button.ventilatie_hoog_10_minuten` / `button.ventilatie_hoog_30_minuten` | Boost: speed 3 for 10 / 30 minutes, then back to the previous setting |
+| `button.ventilatie_herstart_ventilatie_bridge` | Reboots the ESP32 (diagnostic) |
+
 ## Dashboards
 
 - In-HA **Mobiel** dashboard: url_path **`mobiel-dashboard`**, `sections` views:

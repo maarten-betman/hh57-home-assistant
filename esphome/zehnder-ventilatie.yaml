@@ -12,20 +12,7 @@ esp32:
     type: arduino
 
 logger:
-  # TEMPORARY: VERBOSE so we can see nRF905 register verify + raw RF frames while pairing.
-  # Set back to DEBUG (and drop `logs:`) once pairing works.
-  level: VERBOSE
-  logs:
-    api: DEBUG
-    api.connection: DEBUG
-    api.service: DEBUG
-    wifi: DEBUG
-    scheduler: DEBUG
-    component: DEBUG
-    sensor: DEBUG
-    esp32.preferences: DEBUG
-    captive_portal: DEBUG
-    mdns: DEBUG
+  level: DEBUG
 
 api:
   encryption:
@@ -40,6 +27,7 @@ wifi:
   password: !secret wifi_password
   ap:
     ssid: "${name} fallback"
+    password: !secret ap_password
 
 captive_portal:
 
@@ -72,6 +60,24 @@ fan:
 button:
   - platform: restart
     name: "Herstart ventilatie-bridge"
+    entity_category: diagnostic
+
+  # Timer boost: speed 3 (high) for N minutes, then the fan returns to its previous setting.
+  - platform: template
+    name: "Hoog 10 minuten"
+    icon: mdi:fan-clock
+    on_press:
+      then:
+        lambda: |-
+          zehnder_fan->setSpeed(3, 10);
+
+  - platform: template
+    name: "Hoog 30 minuten"
+    icon: mdi:fan-clock
+    on_press:
+      then:
+        lambda: |-
+          zehnder_fan->setSpeed(3, 30);
 
 sensor:
   - platform: wifi_signal

@@ -45,6 +45,9 @@ Views: Thuis, Kamers, Energie, **Warmtepomp**, **Wassen**, Automatiseringen, Hui
 - **Kamers → Oven** section (temperature, status, progress, croissant button, "Oven uit").
 - **Kamers → Slaapkamer** section (WiZ lamp 1/2 with brightness + colour-temp sliders, group tile `light.slaapkamer` + Kast 1/Kast 2). Backup `backups/mobiel-dashboard-before-slaapkamer-wiz.json`.
 - Croissant buttons use an emoji SVG picture card (no `mdi:croissant`).
+- **Thuis → Ventilatie** section (ComfoFan tile with speed selector, "Hoog 10 min" / "Hoog 30 min"
+  boost tiles). Backup `backups/mobiel-dashboard-before-ventilatie.json`.
+
 Pre-edit backups are in `backups/mobiel-dashboard-before-*.json`.
 
 ## Heat pump / hot water
@@ -72,9 +75,13 @@ Pre-edit backups are in `backups/mobiel-dashboard-before-*.json`.
 
 ## Open follow-ups / offers
 
-- **Zehnder ComfoFan S RF bridge** (ESP32 + nRF905, ESPHome): firmware compiles on ESPHome
-  2026.10.2 with a locally ported component. Not yet flashed or paired: the first laptop
-  (WSL2) has no admin rights for usbipd. Continue from step 4 in `esphome/README.md`.
+- **Zehnder ComfoFan S RF bridge** (ESP32 + nRF905, ESPHome 2026.10.2, locally ported component):
+  **working since 2026-11-10.** Paired with the fan, in HA as device **Ventilatie**
+  (`fan.ventilatie_ventilatie`, 25/50/75/100 % = speed 1–4; `sensor.ventilatie_wifi_signaal`;
+  `button.ventilatie_herstart_ventilatie_bridge`). Speeds 1–3 verified from HA. Boost buttons
+  `button.ventilatie_hoog_10_minuten` / `_30_minuten`. Board is on Wi-Fi at 192.168.2.45. Open:
+  permanent placement (desk is at the edge of RF range; don't power it from the fan's circuit).
+  Runbook: `esphome/README.md`.
 
 - Re-measure the AwoX link after the antenna move settled (may improve if it routes via a driver).
 - `Slaapkamer kast 2` driver has a weak link to the coordinator itself (LQI 8) — reposition or
